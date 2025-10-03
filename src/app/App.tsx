@@ -1,5 +1,5 @@
 
-import { Sidebar } from '../components/ui/Sidebar';
+import { Sidebar } from '../shared/components/ui/Sidebar';
 import AuthForm from '../features/auth/AuthForm';
 import { Feed } from '../features/feed';
 import  ProfilePage  from '../features/profile/components/ProfilePage';
