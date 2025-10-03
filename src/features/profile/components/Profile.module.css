@@ -1,0 +1,46 @@
+/* Utility styles for Profile components */
+/* Prefer Tailwind classes, use this file only when absolutely necessary */
+
+/* Hide scrollbar for stories row */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar { 
+  display: none;  /* Safari and Chrome */
+}
+
+/* Focus ring offset adjustment for dark theme */
+.focus-ring-offset {
+  --tw-ring-offset-width: 2px;
+  --tw-ring-offset-color: #0B1220;
+}
+
+/* Custom responsive breakpoints if needed */
+@media (max-width: 420px) {
+  .mobile-stack {
+    flex-direction: column;
+  }
+}
+
+/* Ensure proper spacing for responsive layout */
+.responsive-spacing {
+  padding-left: 1rem; /* 16px mobile */
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px) {
+  .responsive-spacing {
+    padding-left: 1.5rem; /* 24px tablet */
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-spacing {
+    padding-left: 2rem; /* 32px desktop */
+    padding-right: 2rem;
+  }
+}
+
