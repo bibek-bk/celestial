@@ -3,14 +3,15 @@ import { useState, useEffect } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import { Auth } from '@supabase/auth-ui-react'
 import { ThemeSupa } from '@supabase/auth-ui-shared'
+import type { Session } from '@supabase/supabase-js'
 
 const supabase = createClient(import.meta.env.VITE_SUPABASE_URL,import.meta.env.VITE_SUPABASE_ANON_KEY )
 
-import type { Session } from '@supabase/supabase-js'
 
 export default function AuthForm() {
   const [session, setSession] = useState<Session | null>(null)
   console.log(session);
+  const avatar = session?.user.user_metadata.avatar_url ?? session?.user.user_metadata.picture;
  
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -64,8 +65,8 @@ export default function AuthForm() {
     return (<div>
       Logged in!
 
-      <button onClick={handleSignOut}>Sign out</button>
-      <img src={session.user.user_metadata.avatar_url} alt="User Avatar" />
+      <button className='px-4 py-2 border-white border-2' onClick={handleSignOut}>Sign out</button>
+      <img src={avatar} alt="User Avatar" />
       </div>)
   }
 }
