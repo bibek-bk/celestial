@@ -5,9 +5,10 @@ import StoriesRow from './StoriesRow';
 import PostsReelsToggle from './PostsReelsToggle';
 import PostsPlaceholder from './PostsPlaceholder';
 import ReelsPlaceholder from './ReelsPlaceholder';
+import { useProfile } from '../hooks/useProfile';
 
 interface User {
-  avatarSrc: string;
+  avatar_url: string;
   avatarAlt: string;
   name: string;
   subtitle: string;
@@ -25,9 +26,9 @@ interface ProfilePageProps {
   className?: string;
 }
 
-const ProfilePage: React.FC<ProfilePageProps> = ({ 
+const ProfilePage: React.FC<ProfilePageProps> = ({
   user = {
-    avatarSrc: '/placeholder-user.jpg',
+    avatar_url: '/placeholder-user.jpg',
     avatarAlt: 'Profile avatar',
     name: 'Unblast',
     subtitle: 'E-commerce Website',
@@ -42,6 +43,10 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
   className = ''
 }) => {
   const [activeTab, setActiveTab] = useState<'posts' | 'reels'>('posts');
+  const { profile, isLoading } = useProfile('2d06f3c7-8630-48be-8832-41698df8a9c4');
+  console.log(isLoading)
+  console.log(profile,'im from profile page')
+
 
   const handleFollow = () => {
     if (onFollow) {
@@ -60,7 +65,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
         {/* Profile Header - starts 20px from top on mobile, 32px on tablet/desktop */}
         <div className="pt-5 sm:pt-8">
           <ProfileHeader
-            avatarSrc={user.avatarSrc}
+            avatarSrc={profile?.avatar_url || user.avatar_url}
             avatarAlt={user.avatarAlt}
             posts={user.posts}
             followers={user.followers}
@@ -73,9 +78,9 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
         {/* Bio Section */}
         <div className="mt-3">
           <Bio
-            name={user.name}
+            name={profile?.full_name || user.name}            
             subtitle={user.subtitle}
-            bio={user.bio}
+            bio={profile?.bio || user.bio}
             location={user.location}
           />
         </div>
@@ -89,8 +94,8 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
         <div className="mt-3 border-t border-[#14202B] mx-4 sm:mx-6"></div>
 
         {/* Posts/Reels Toggle Bar */}
-        <PostsReelsToggle 
-          activeTab={activeTab} 
+        <PostsReelsToggle
+          activeTab={activeTab}
           onTabChange={handleTabChange}
         />
 

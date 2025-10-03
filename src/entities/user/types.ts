@@ -3,8 +3,10 @@ export type UserID = string;
 
 export interface User {
     id: UserID;
-    username: string;
+    username?: string;
+    full_name?: string;
     avatarUrl?: string;
+    avatar_url?: string;
     bio?: string;
     createdAt: string;
 }
