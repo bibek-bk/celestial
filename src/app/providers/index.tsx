@@ -1,6 +1,6 @@
-// import { ReduxProvider } from './ReduxProvider';
+import { ReduxProvider } from './ReduxProvider';
 import { QueryProvider } from './QueryProvider';
-// import { AuthProvider } from './AuthProvider';
+import { AuthProvider } from './AuthProvider';
 
 interface AppProvidersProps {
   children: React.ReactNode;
@@ -8,12 +8,12 @@ interface AppProvidersProps {
 
 export function AppProviders({ children }: AppProvidersProps) {
   return (
-    // <ReduxProvider>
+    <ReduxProvider>
       <QueryProvider>
-        {/* <AuthProvider> */}
+        <AuthProvider>
           {children}
-        {/* </AuthProvider> */}
+        </AuthProvider>
       </QueryProvider>
-    // </ReduxProvider>
+    </ReduxProvider>
   );
 }

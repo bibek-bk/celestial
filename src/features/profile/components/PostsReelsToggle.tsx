@@ -13,14 +13,14 @@ const PostsReelsToggle: React.FC<PostsReelsToggleProps> = ({
 }) => {
   return (
     <div className={`px-4 sm:px-6 ${className}`}>
-      <div className="flex border-b border-[#14202B]">
+      <div className="flex border-b border-[var(--color-border)]">
         {/* Posts Tab */}
         <button
           onClick={() => onTabChange('posts')}
-          className={`flex-1 py-3 px-4 text-center font-medium text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#1E90FF] focus:ring-offset-2 focus:ring-offset-[#0B1220] ${
+          className={`flex-1 py-3 px-4 text-center font-medium text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-offset-2 focus:ring-offset-[var(--color-background)] ${
             activeTab === 'posts'
-              ? 'text-[#E6EEF3] border-b-2 border-[#1E90FF]'
-              : 'text-[#9AA6B2] hover:text-[#E6EEF3]'
+              ? 'text-[var(--color-text-primary)] ]'
+              : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
           }`}
           aria-label="View posts"
           role="tab"
@@ -32,7 +32,7 @@ const PostsReelsToggle: React.FC<PostsReelsToggleProps> = ({
               height="16" 
               viewBox="0 0 24 24" 
               fill="none" 
-              className={activeTab === 'posts' ? 'text-[#1E90FF]' : 'text-[#9AA6B2]'}
+              className={activeTab === 'posts' ? 'text-[var(--color-primary)]' : 'text-[var(--color-text-secondary)]'}
             >
               <rect 
                 x="3" 
@@ -78,10 +78,10 @@ const PostsReelsToggle: React.FC<PostsReelsToggleProps> = ({
         {/* Reels Tab */}
         <button
           onClick={() => onTabChange('reels')}
-          className={`flex-1 py-3 px-4 text-center font-medium text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[#1E90FF] focus:ring-offset-2 focus:ring-offset-[#0B1220] ${
+          className={`flex-1 py-3 px-4 text-center font-medium text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-offset-2 focus:ring-offset-[var(--color-background)] ${
             activeTab === 'reels'
-              ? 'text-[#E6EEF3] border-b-2 border-[#1E90FF]'
-              : 'text-[#9AA6B2] hover:text-[#E6EEF3]'
+              ? 'text-[var(--color-text-primary)]]'
+              : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
           }`}
           aria-label="View reels"
           role="tab"
@@ -93,7 +93,7 @@ const PostsReelsToggle: React.FC<PostsReelsToggleProps> = ({
               height="16" 
               viewBox="0 0 24 24" 
               fill="none" 
-              className={activeTab === 'reels' ? 'text-[#1E90FF]' : 'text-[#9AA6B2]'}
+              className={activeTab === 'reels' ? 'text-[var(--color-primary)]' : 'text-[var(--color-text-secondary)]'}
             >
               <rect 
                 x="2" 

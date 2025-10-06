@@ -39,3 +39,9 @@ const authSlice = createSlice({
 
 export const { setAuth, clearAuth, setLoading } = authSlice.actions;
 export default authSlice.reducer;
+
+// Selectors
+export const selectAuthUser = (state: { auth: AuthState }) => state.auth.user;
+export const selectAuthSession = (state: { auth: AuthState }) => state.auth.session;
+export const selectIsAuthenticated = (state: { auth: AuthState }) => state.auth.isAuthenticated;
+export const selectAuthLoading = (state: { auth: AuthState }) => state.auth.isLoading;

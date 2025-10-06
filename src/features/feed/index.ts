@@ -1,5 +1,5 @@
 // Feed Components
-export { Avatar } from './components/post/Avatar';
+export { Avatar } from '@/design-system/components/Avatar/Avatar';
 export { PostMedia } from './components/post/PostMedia';
 export { ActionBar } from './components/post/ActionBar';
 export { Caption } from './components/post/Caption';

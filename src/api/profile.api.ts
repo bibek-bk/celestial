@@ -11,7 +11,6 @@ export async function fetchProfile(userId: string): Promise<User | null> {
         .eq('id', userId)
         .single()
     if (error) throw error;
-    console.log(data,'from supabase api');
     
     return data;
 }
