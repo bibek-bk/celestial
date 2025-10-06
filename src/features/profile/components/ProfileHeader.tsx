@@ -1,5 +1,6 @@
 import React from 'react';
-import Avatar from './Avatar';
+import { Avatar } from '@/design-system/components/Avatar/Avatar';
+import { Button } from '@/design-system/components/Button/Button';
 import Metrics from './Metrics';
 
 interface ProfileHeaderProps {
@@ -47,38 +48,30 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         </div>
 
         {/* Follow Button */}
-        <button
+        <Button
           onClick={onFollow}
-          className={`
-            h-9 px-[18px] rounded-md font-medium text-white
-            bg-[#1E90FF] hover:bg-[#1B7FE6] active:bg-[#196FD6]
-            transition-colors duration-200
-            w-full sm:w-auto sm:min-w-[120px]
-            flex items-center justify-center gap-2
-            focus:outline-none focus:ring-2 focus:ring-[#1E90FF] focus:ring-offset-2 focus:ring-offset-[#0B1220]
-          `}
           aria-label={isFollowing ? 'Unfollow user' : 'Follow user'}
           aria-pressed={isFollowing}
+          className="w-full sm:w-auto sm:min-w-[120px] gap-2"
         >
           {isFollowing ? 'Following' : 'Follow'}
-          {/* Chevron down icon placeholder */}
-          <svg 
-            width="12" 
-            height="12" 
-            viewBox="0 0 12 12" 
-            fill="none" 
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
             className="opacity-80"
             aria-hidden="true"
           >
-            <path 
-              d="M3 4.5L6 7.5L9 4.5" 
-              stroke="currentColor" 
-              strokeWidth="1.5" 
-              strokeLinecap="round" 
+            <path
+              d="M3 4.5L6 7.5L9 4.5"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
               strokeLinejoin="round"
             />
           </svg>
-        </button>
+        </Button>
       </div>
     </div>
   );

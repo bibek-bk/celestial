@@ -24,12 +24,12 @@ const Metrics: React.FC<MetricsProps> = ({
       {metrics.map((metric) => (
         <div key={metric.label} className="text-center">
           <div 
-            className="text-lg font-semibold text-[#E6EEF3] md:text-xl"
+            className="text-lg font-semibold text-[var(--color-text-primary)] md:text-xl"
             aria-label={`${metric.value} ${metric.label}`}
           >
             {metric.value.toLocaleString()}
           </div>
-          <div className="text-sm text-[#9AA6B2]">
+          <div className="text-sm text-[var(--color-text-secondary)]">
             {metric.label}
           </div>
         </div>

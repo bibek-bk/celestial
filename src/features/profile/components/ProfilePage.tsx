@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ProfileHeader from './ProfileHeader';
 import Bio from './Bio';
-import StoriesRow from './StoriesRow';
+// import StoriesRow from './StoriesRow';
 import PostsReelsToggle from './PostsReelsToggle';
 import PostsPlaceholder from './PostsPlaceholder';
 import ReelsPlaceholder from './ReelsPlaceholder';
@@ -59,7 +59,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
   };
 
   return (
-    <div className={`min-h-screen bg-[#0B1220] ${className}`}>
+    <div className={`min-h-screen bg-[var(--color-background)] ${className}`}>
       {/* Main Container */}
       <div className="max-w-full sm:max-w-[680px] lg:max-w-[720px] mx-auto">
         {/* Profile Header - starts 20px from top on mobile, 32px on tablet/desktop */}
@@ -86,12 +86,12 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
         </div>
 
         {/* Stories Row */}
-        <div className="mt-6">
+        {/* <div className="mt-6">
           <StoriesRow />
-        </div>
+        </div> */}
 
         {/* Divider */}
-        <div className="mt-3 border-t border-[#14202B] mx-4 sm:mx-6"></div>
+        <div className="mt-3 border-t border-[var(--color-border)] mx-4 sm:mx-6"></div>
 
         {/* Posts/Reels Toggle Bar */}
         <PostsReelsToggle

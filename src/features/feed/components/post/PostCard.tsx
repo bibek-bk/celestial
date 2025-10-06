@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar } from './Avatar';
+import { Avatar } from '@/design-system/components/Avatar/Avatar';
 import { PostMedia } from './PostMedia';
 import { ActionBar } from './ActionBar';
 import { Caption } from './Caption';
