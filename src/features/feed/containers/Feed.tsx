@@ -206,6 +206,7 @@ export const Feed: React.FC<FeedProps> = ({
 
   return (
     <div className={`py-6  ${className}`}>
+      <h1>This is Feed.tsx</h1>
       {mockPosts.map((post) => (
         <PostCard
           key={post.id}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProfileHeader from './ProfileHeader';
 import Bio from './Bio';
 // import StoriesRow from './StoriesRow';
@@ -6,6 +6,7 @@ import PostsReelsToggle from './PostsReelsToggle';
 import PostsPlaceholder from './PostsPlaceholder';
 import ReelsPlaceholder from './ReelsPlaceholder';
 import { useProfile } from '../hooks/useProfile';
+import { useAuth } from '@/shared/hooks/useAuth';
 
 interface User {
   avatar_url: string;
@@ -43,9 +44,14 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
   className = ''
 }) => {
   const [activeTab, setActiveTab] = useState<'posts' | 'reels'>('posts');
-  const { profile, isLoading } = useProfile('2d06f3c7-8630-48be-8832-41698df8a9c4');
-  console.log(isLoading)
-  console.log(profile,'im from profile page')
+  const { userId } = useAuth();
+  const { profile, isLoading } = useProfile(userId ?? '');
+
+  useEffect(() => {
+    // Log only when loading state or profile data actually changes
+    console.log(isLoading);
+    console.log(profile, 'im from profile page');
+  }, [isLoading, profile]);
 
 
   const handleFollow = () => {

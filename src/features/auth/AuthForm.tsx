@@ -3,12 +3,14 @@ import { useEffect, useMemo } from 'react'
 import { Auth } from '@supabase/auth-ui-react'
 import { ThemeSupa } from '@supabase/auth-ui-shared'
 import { supabase } from '@/lib/supabaseClient'
+import { signOut } from '@/services/auth'
 import { useAuth } from '@/shared/hooks/useAuth'
 
 
 
 export default function AuthForm() {
   const { session, isAuthenticated } = useAuth()
+  
   const avatar = useMemo(
     () => session?.user.user_metadata?.avatar_url ?? session?.user.user_metadata?.picture,
     [session]
@@ -17,8 +19,11 @@ export default function AuthForm() {
 
 
   const handleSignOut = async () => {
-    const { error } = await supabase.auth.signOut()
-    if (error) console.error('Error signing out:', error)
+    try {
+      await signOut()
+    } catch (error) {
+      console.error('Error signing out:', error)
+    }
   }
 
   useEffect(() => {
