@@ -9,6 +9,7 @@ export interface User {
     avatar_url?: string;
     bio?: string;
     createdAt: string;
+    followers_count?: number;
 }
 
 export interface UpdateUserInput {

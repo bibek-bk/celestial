@@ -1,4 +1,4 @@
 export const profileKeys = {
     all: ['profiles'] as const,
-    detail: (username: string) => [...profileKeys.all, username] as const,
+    detail: (userId: string) => [...profileKeys.all, userId] as const,
   };
