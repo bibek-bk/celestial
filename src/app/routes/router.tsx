@@ -6,10 +6,10 @@ import { RedirectIfAuthenticated } from '@/shared/components/guards/RedirectIfAu
 import { RouteErrorBoundary } from './ErrorBoundary';
 import { NotFound } from './NotFound';
 
-// Lazy pages
-const FeedPage = lazy(() => import('@/features/feed/containers/Feed').then(m => ({ default: m.Feed })));
-const ProfilePage = lazy(() => import('@/features/profile/components/ProfilePage'));
-const AuthPage = lazy(() => import('@/features/auth/AuthForm'));
+// Lazy pages (from src/pages)
+const FeedPage = lazy(() => import('@/pages/FeedPage'));
+const ProfilePage = lazy(() => import('@/pages/ProfilePage'));
+const AuthPage = lazy(() => import('@/pages/AuthPage'));
 
 // Simple role meta and gate
 type AppRole = 'guest' | 'user';

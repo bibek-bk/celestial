@@ -57,3 +57,5 @@ export const SkeletonPost: React.FC<SkeletonPostProps> = ({ className = '' }) =>
     </div>
   );
 };
+
+

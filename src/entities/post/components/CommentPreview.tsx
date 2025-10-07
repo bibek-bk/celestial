@@ -1,12 +1,5 @@
 import React from 'react';
-
-interface Comment {
-  id: string;
-  username: string;
-  text: string;
-  likes: number;
-  timestamp: string;
-}
+import { Comment } from '@/entities/post/models/types';
 
 interface CommentPreviewProps {
   comments: Comment[];
@@ -37,3 +30,6 @@ export const CommentPreview: React.FC<CommentPreviewProps> = ({
     </div>
   );
 };
+
+
+

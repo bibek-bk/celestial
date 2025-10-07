@@ -6,7 +6,7 @@ export function AuthenticatedLayout(): React.JSX.Element {
   return (
     <div className="h-screen overflow-hidden w-full bg-black">
       <div className="flex w-full">
-        <div className="px-6 h-screen">
+        <div className="px-6 h-screen hidden md:block">
           <Sidebar />
         </div>
 
