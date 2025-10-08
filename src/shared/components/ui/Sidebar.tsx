@@ -4,17 +4,19 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/shared/hooks/useAuth';
 import { signOut } from '@/services/auth';
 import { CreatePostModal } from '@/features/posts';
+import { useToast } from '@/shared/components/ui/ToastProvider';
 
 export function Sidebar() {
   const navigate = useNavigate();
   const { userId } = useAuth();
   const [isSigningOut, setIsSigningOut] = useState(false);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
+  const { error: showError } = useToast();
 
   const menuItems = useMemo(() => ([
     { icon: Home, label: 'Home', id: 'home', onClick: () => navigate('/') },
-    { icon: Search, label: 'Search', id: 'search', onClick: () => {} },
-    { icon: MessageCircle, label: 'Messages', id: 'messages', onClick: () => {} },
+    { icon: Search, label: 'Search', id: 'search', onClick: () => navigate('/search') },
+    { icon: MessageCircle, label: 'Messages', id: 'messages', onClick: () => navigate('/messages') },
     { icon: User, label: 'Profile', id: 'profile', onClick: () => { if (userId) navigate(`/profile/${userId}`); } },
     { icon: PlusSquare, label: 'Create', id: 'create', onClick: () => setIsCreateOpen(true) },
   ]), [navigate, userId]);
@@ -25,10 +27,13 @@ export function Sidebar() {
       setIsSigningOut(true);
       await signOut();
       navigate('/login');
+    } catch (err) {
+      const description = err instanceof Error ? err.message : 'Unexpected error occurred';
+      showError('Failed to sign out', description);
     } finally {
       setIsSigningOut(false);
     }
-  }, [navigate, isSigningOut]);
+  }, [navigate, isSigningOut, showError]);
 
   return (
     <div className="w-60 bg-[var(--color-background)] border-r border-[var(--color-border)] flex flex-col p-6 sticky top-0 h-screen">

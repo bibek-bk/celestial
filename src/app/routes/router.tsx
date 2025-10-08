@@ -10,6 +10,8 @@ import { NotFound } from './NotFound';
 const FeedPage = lazy(() => import('@/pages/FeedPage'));
 const ProfilePage = lazy(() => import('@/pages/ProfilePage'));
 const AuthPage = lazy(() => import('@/pages/AuthPage'));
+const SearchComingSoon = lazy(() => import('@/pages/SearchComingSoon'));
+const MessagesComingSoon = lazy(() => import('@/pages/MessagesComingSoon'));
 
 // Simple role meta and gate
 type AppRole = 'guest' | 'user';
@@ -48,22 +50,30 @@ export const router = createBrowserRouter([
         element: withSuspense(withRoleGate(<FeedPage />, { roles: ['user'] })),
       },
       {
+        path: 'search',
+        element: withSuspense(withRoleGate(<SearchComingSoon />, { roles: ['user'] })),
+      },
+      {
+        path: 'messages',
+        element: withSuspense(withRoleGate(<MessagesComingSoon />, { roles: ['user'] })),
+      },
+      {
         path: 'profile/:id',
         element: withSuspense(withRoleGate(<ProfilePage />, { roles: ['user'] })),
       },
     ],
   },
   {
-    path: '/',
+    // Pathless layout so it doesn't shadow the authenticated '/' branch
     element: <PublicLayout />,
     errorElement: <RouteErrorBoundary />,
     children: [
       {
-        path: 'login',
+        path: '/login',
         element: withSuspense(withRoleGate(<AuthPage />, { roles: ['guest'] })),
       },
       {
-        path: 'profile/:id',
+        path: '/public/profile/:id',
         // Public profile page viewable by guests; actions inside page should self-guard
         element: withSuspense(<ProfilePage />),
       },
