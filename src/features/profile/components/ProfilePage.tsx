@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import ProfileHeader from './ProfileHeader';
 import Bio from './Bio';
 // import StoriesRow from './StoriesRow';
@@ -44,20 +45,25 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
   className = ''
 }) => {
   const [activeTab, setActiveTab] = useState<'posts' | 'reels'>('posts');
+  const { id: profileId } = useParams<{ id: string }>();
   const { userId } = useAuth();
-  const { profile, isLoading } = useProfile(userId ?? '');
+  const { profile, isLoading } = useProfile(profileId ?? userId ?? '');
+  
+  // Check if viewing own profile
+  const isOwnProfile = profileId === userId;
 
-  useEffect(() => {
-    // Log only when loading state or profile data actually changes
-    console.log(isLoading);
-    console.log(profile, 'im from profile page');
-  }, [isLoading, profile]);
 
 
   const handleFollow = () => {
     if (onFollow) {
       onFollow(user);
     }
+  };
+
+  const handleEditProfile = () => {
+    // Dummy edit profile handler
+    console.log('Edit profile clicked');
+    alert('Edit Profile functionality will be implemented soon!');
   };
 
   const handleTabChange = (tab: 'posts' | 'reels') => {
@@ -67,7 +73,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
   return (
     <div className={`min-h-screen bg-[var(--color-background)] ${className}`}>
       {/* Main Container */}
-      <div className="max-w-full sm:max-w-[680px] lg:max-w-[720px] mx-auto">
+      <div className="max-w-full sm:max-w-[680px] mx-auto">
         {/* Profile Header - starts 20px from top on mobile, 32px on tablet/desktop */}
         <div className="pt-5 sm:pt-8">
           <ProfileHeader
@@ -77,7 +83,10 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
             followers={user.followers}
             following={user.following}
             onFollow={handleFollow}
+            onEditProfile={handleEditProfile}
             isFollowing={user.isFollowing}
+            isOwnProfile={isOwnProfile}
+            isLoading={isLoading}
           />
         </div>
 

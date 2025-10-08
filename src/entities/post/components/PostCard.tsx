@@ -41,7 +41,7 @@ export const PostCard: React.FC<PostCardProps> = ({
   const handleLike = () => onLike?.(id);
 
   return (
-    <article className={`bg-gray-900 w-md  rounded-xl shadow-lg border border-gray-800 mb-6 overflow-hidden ${className}`}>
+    <article className={`bg-gray-900 w-full max-w-md mx-auto rounded-xl shadow-lg border border-gray-800 mb-4 sm:mb-6 overflow-hidden ${className}`}>
       {/* Post Header */}
       <header className="flex items-center p-4">
         <Avatar 
@@ -72,8 +72,8 @@ export const PostCard: React.FC<PostCardProps> = ({
                 />
               </svg>
             )}
+            
           </div>
-         
         </div>
         <button 
           className="p-1 hover:bg-gray-800 rounded-full focus:outline-none transition-colors"

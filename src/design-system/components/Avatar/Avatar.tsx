@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { cn } from '../../utils/cn';
+import { Skeleton } from '../Skeleton/Skeleton';
 
 type LegacySize = 'sm' | 'md' | 'lg' | 'mobile' | 'tablet' | 'desktop';
 
@@ -25,16 +26,37 @@ export const Avatar: React.FC<AvatarProps> = ({
   size = 'md',
   className,
 }) => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+
+  const handleImageLoad = () => {
+    setIsLoading(false);
+  };
+
+  const handleImageError = () => {
+    setIsLoading(false);
+    setHasError(true);
+  };
+
   return (
     <div className={cn('relative', sizeToClasses[size], className)}>
+      {isLoading && (
+        <Skeleton
+          variant="circular"
+          className="absolute inset-0 w-full h-full"
+        />
+      )}
       <img
-        src={src}
+        src={hasError ? '/placeholder-user.jpg' : src}
         alt={alt}
         className={cn(
           'w-full h-full rounded-full object-cover aspect-square',
-          'border border-gray-700'
+          'border border-gray-700 transition-opacity duration-300',
+          isLoading ? 'opacity-0' : 'opacity-100'
         )}
         loading="lazy"
+        onLoad={handleImageLoad}
+        onError={handleImageError}
       />
     </div>
   );

@@ -10,7 +10,7 @@ export function AuthenticatedLayout(): React.JSX.Element {
           <Sidebar />
         </div>
 
-        <div className="flex flex-col w-full items-center justify-start py-8 h-screen overflow-y-auto">
+        <div className="flex flex-col w-full justify-start py-8 h-screen overflow-y-auto">
           <Outlet />
         </div>
       </div>

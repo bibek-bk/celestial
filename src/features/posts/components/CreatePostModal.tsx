@@ -1,6 +1,8 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { X, Image as ImageIcon, Loader2, Check } from 'lucide-react';
 import { useCreatePostFlow } from '@/features/posts/hooks/useCreatePostFlow';
+import { Button } from '@/design-system/components/Button/Button';
 
 interface CreatePostModalProps {
   isOpen: boolean;
@@ -9,7 +11,7 @@ interface CreatePostModalProps {
 
 const ImagePreview: React.FC<{ preview: string; onRemove: () => void }> = ({ preview, onRemove }) => {
   return (
-    <div className="relative w-full aspect-square rounded-lg overflow-hidden bg-gray-100">
+    <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-[var(--color-background-secondary)]">
       <img src={preview} alt="Preview" className="w-full h-full object-cover" />
       <button
         onClick={onRemove}
@@ -46,8 +48,8 @@ const ImageUploader: React.FC<{ onImageSelect: (file: File) => void; disabled?: 
 
   return (
     <div
-      className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-        dragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300 hover:border-gray-400'
+      className={`relative border-2 border-dashed rounded-xl p-8 text-center transition-colors ${
+        dragActive ? 'border-[var(--color-primary)] bg-[var(--color-primary)]/10' : 'border-[var(--color-border)] hover:border-[var(--color-border)]/80'
       } ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
       onDragEnter={handleDrag}
       onDragLeave={handleDrag}
@@ -56,9 +58,9 @@ const ImageUploader: React.FC<{ onImageSelect: (file: File) => void; disabled?: 
       onClick={() => !disabled && inputRef.current?.click()}
     >
       <input ref={inputRef} type="file" accept="image/*" onChange={handleChange} className="hidden" disabled={disabled} />
-      <ImageIcon className="mx-auto mb-4 text-gray-400" size={48} />
-      <p className="text-gray-600 font-medium mb-1">Drag and drop your photo here</p>
-      <p className="text-sm text-gray-500">or click to browse</p>
+      <ImageIcon className="mx-auto mb-4 text-[var(--color-text-secondary)]" size={48} />
+      <p className="text-[var(--color-text-primary)] font-medium mb-1">Drag and drop your photo here</p>
+      <p className="text-sm text-[var(--color-text-secondary)]">or click to browse</p>
     </div>
   );
 };
@@ -68,11 +70,11 @@ const ProgressBar: React.FC<{ progress: number; stage: 'uploading' | 'creating' 
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between text-sm">
-        <span className="text-gray-600">{stageText[stage]}</span>
-        <span className="text-gray-600 font-medium">{progress}%</span>
+        <span className="text-[var(--color-text-secondary)]">{stageText[stage]}</span>
+        <span className="text-[var(--color-text-secondary)] font-medium">{progress}%</span>
       </div>
-      <div className="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-        <div className="bg-blue-500 h-full transition-all duration-300 ease-out" style={{ width: `${progress}%` }} />
+      <div className="w-full bg-[var(--color-background-secondary)] rounded-full h-2 overflow-hidden">
+        <div className="bg-[var(--color-primary)] h-full transition-all duration-300 ease-out" style={{ width: `${progress}%` }} />
       </div>
     </div>
   );
@@ -95,6 +97,28 @@ export const CreatePostModal: React.FC<CreatePostModalProps> = ({ isOpen, onClos
     resetForm,
   } = useCreatePostFlow();
 
+  // Focus management for accessibility
+  useEffect(() => {
+    if (isOpen) {
+      // Prevent body scroll when modal is open
+      document.body.style.overflow = 'hidden';
+      
+      // Focus the modal container
+      const modalElement = document.querySelector('[role="dialog"]') as HTMLElement;
+      if (modalElement) {
+        modalElement.focus();
+      }
+    } else {
+      // Restore body scroll when modal is closed
+      document.body.style.overflow = 'unset';
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const success = await handleSubmit();
@@ -111,17 +135,31 @@ export const CreatePostModal: React.FC<CreatePostModalProps> = ({ isOpen, onClos
     onClose();
   };
 
+  // Handle keyboard events
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Escape' && !isPending) {
+      handleClose();
+    }
+  };
+
   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-      <div className="absolute inset-0 bg-black/60" onClick={handleClose} />
-      <div className="relative bg-white rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
-        <div className="flex items-center justify-between px-6 py-4 border-b">
-          <h2 className="text-xl font-semibold">Create new post</h2>
+  const modalContent = (
+    <div 
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+      onKeyDown={handleKeyDown}
+      tabIndex={-1}
+    >
+      <div className="absolute inset-0 z-[9998] bg-black/80" onClick={handleClose} />
+      <div className="relative z-[9999] bg-[var(--color-background-secondary)] rounded-xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col border border-[var(--color-border)]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-border)]">
+          <h2 id="modal-title" className="text-xl font-semibold text-[var(--color-text-primary)]">Create new post</h2>
           {!isPending && (
-            <button onClick={handleClose} className="p-1 hover:bg-gray-100 rounded-full transition-colors">
-              <X size={24} />
+            <button onClick={handleClose} className="p-1 hover:bg-[var(--color-background)] rounded-full transition-colors">
+              <X size={24} className="text-[var(--color-text-secondary)]" />
             </button>
           )}
         </div>
@@ -136,18 +174,18 @@ export const CreatePostModal: React.FC<CreatePostModalProps> = ({ isOpen, onClos
 
             {selectedImage && (
               <div>
-                <label htmlFor="caption" className="block text-sm font-medium text-gray-700 mb-2">Caption</label>
+                <label htmlFor="caption" className="block text-sm font-medium text-[var(--color-text-primary)] mb-2">Caption</label>
                 <textarea
                   id="caption"
                   value={caption}
                   onChange={(e) => setCaption(e.target.value)}
                   placeholder="Write a caption..."
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                  className="w-full px-4 py-3 border border-[var(--color-border)] rounded-xl focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent resize-none bg-[var(--color-background)] text-[var(--color-text-primary)] placeholder-[var(--color-text-secondary)]"
                   rows={4}
                   maxLength={2200}
                   disabled={isPending}
                 />
-                <div className="text-right text-sm text-gray-500 mt-1">{caption.length}/2200</div>
+                <div className="text-right text-sm text-[var(--color-text-secondary)] mt-1">{caption.length}/2200</div>
               </div>
             )}
 
@@ -156,32 +194,34 @@ export const CreatePostModal: React.FC<CreatePostModalProps> = ({ isOpen, onClos
             )}
 
             {isSuccess && (
-              <div className="flex items-center gap-2 p-4 bg-green-50 text-green-700 rounded-lg">
+              <div className="flex items-center gap-2 p-4 bg-green-500/10 text-green-400 rounded-xl border border-green-500/20">
                 <Check size={20} />
                 <span className="font-medium">Post created successfully!</span>
               </div>
             )}
 
             {error && (
-              <div className="p-4 bg-red-50 text-red-700 rounded-lg">
+              <div className="p-4 bg-red-500/10 text-red-400 rounded-xl border border-red-500/20">
                 <p className="font-medium">Failed to create post</p>
                 <p className="text-sm mt-1">{error}</p>
               </div>
             )}
 
             <div className="flex gap-3 pt-4">
-              <button
+              <Button
                 type="button"
                 onClick={handleClose}
                 disabled={isPending}
-                className="flex-1 px-6 py-3 border border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                variant="secondary"
+                className="flex-1"
               >
                 Cancel
-              </button>
-              <button
+              </Button>
+              <Button
                 type="submit"
                 disabled={!canSubmit}
-                className="flex-1 px-6 py-3 bg-blue-500 text-white rounded-lg font-medium hover:bg-blue-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                variant="primary"
+                className="flex-1 flex items-center justify-center gap-2"
               >
                 {isPending ? (
                   <>
@@ -191,13 +231,15 @@ export const CreatePostModal: React.FC<CreatePostModalProps> = ({ isOpen, onClos
                 ) : (
                   'Share'
                 )}
-              </button>
+              </Button>
             </div>
           </form>
         </div>
       </div>
     </div>
   );
+
+  return createPortal(modalContent, document.body);
 };
 
 export default CreatePostModal;

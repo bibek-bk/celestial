@@ -1,4 +1,5 @@
 import React from 'react';
+import { Skeleton } from '@/design-system/components/Skeleton/Skeleton';
 
 interface SkeletonPostProps {
   className?: string;
@@ -6,53 +7,53 @@ interface SkeletonPostProps {
 
 export const SkeletonPost: React.FC<SkeletonPostProps> = ({ className = '' }) => {
   return (
-    <div className={`bg-white rounded-lg shadow-sm border border-gray-200 mb-4 ${className}`}>
+    <div className={`bg-[var(--color-background-secondary)] rounded-lg w-md shadow-sm border border-[var(--color-border)] mb-4 ${className}`}>
       {/* Header Skeleton */}
       <div className="flex items-center p-4">
-        <div className="w-10 h-10 bg-gray-200 rounded-full animate-pulse"></div>
+        <Skeleton variant="circular" width={40} height={40} />
         <div className="ml-3 flex-1">
-          <div className="h-4 bg-gray-200 rounded animate-pulse w-24 mb-2"></div>
-          <div className="h-3 bg-gray-200 rounded animate-pulse w-16"></div>
+          <Skeleton variant="text" height={16} width={96} className="mb-2" />
+          <Skeleton variant="text" height={12} width={64} />
         </div>
       </div>
 
       {/* Media Skeleton */}
-      <div className="w-full aspect-square bg-gray-200 animate-pulse"></div>
+      <Skeleton variant="rectangular" className="w-full aspect-square" />
 
       {/* Action Bar Skeleton */}
       <div className="flex items-center justify-between py-3 px-4">
         <div className="flex items-center space-x-4">
-          <div className="w-6 h-6 bg-gray-200 rounded animate-pulse"></div>
-          <div className="w-6 h-6 bg-gray-200 rounded animate-pulse"></div>
-          <div className="w-6 h-6 bg-gray-200 rounded animate-pulse"></div>
+          <Skeleton variant="rectangular" width={24} height={24} />
+          <Skeleton variant="rectangular" width={24} height={24} />
+          <Skeleton variant="rectangular" width={24} height={24} />
         </div>
-        <div className="w-6 h-6 bg-gray-200 rounded animate-pulse"></div>
+        <Skeleton variant="rectangular" width={24} height={24} />
       </div>
 
       {/* Likes Skeleton */}
       <div className="px-4 pb-2">
-        <div className="h-4 bg-gray-200 rounded animate-pulse w-20"></div>
+        <Skeleton variant="text" height={16} width={80} />
       </div>
 
       {/* Caption Skeleton */}
       <div className="px-4 pb-2">
         <div className="space-y-2">
-          <div className="h-4 bg-gray-200 rounded animate-pulse w-full"></div>
-          <div className="h-4 bg-gray-200 rounded animate-pulse w-3/4"></div>
+          <Skeleton variant="text" height={16} width="100%" />
+          <Skeleton variant="text" height={16} width="75%" />
         </div>
       </div>
 
       {/* Comments Skeleton */}
       <div className="px-4 pb-3">
         <div className="space-y-2">
-          <div className="h-3 bg-gray-200 rounded animate-pulse w-32"></div>
-          <div className="h-3 bg-gray-200 rounded animate-pulse w-28"></div>
+          <Skeleton variant="text" height={12} width={128} />
+          <Skeleton variant="text" height={12} width={112} />
         </div>
       </div>
 
       {/* Timestamp Skeleton */}
       <div className="px-4 pb-3">
-        <div className="h-3 bg-gray-200 rounded animate-pulse w-16"></div>
+        <Skeleton variant="text" height={12} width={64} />
       </div>
     </div>
   );

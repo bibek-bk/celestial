@@ -12,7 +12,7 @@ export const Feed: React.FC<FeedProps> = ({ className = '' }) => {
 
   if (isLoading) {
     return (
-      <div className={`max-w-md mx-auto px-4 ${className}`}>
+      <div className={`max-w-md mx-auto px-4 py-4 sm:py-6 ${className}`}>
         <SkeletonPost />
         <SkeletonPost />
         <SkeletonPost />
@@ -22,7 +22,7 @@ export const Feed: React.FC<FeedProps> = ({ className = '' }) => {
 
   if (error) {
     return (
-      <div className={`max-w-md mx-auto px-4 py-8 text-center ${className}`}>
+      <div className={`max-w-md mx-auto px-4 py-6 sm:py-8 text-center ${className}`}>
         <p className="text-red-500">Failed to load posts</p>
         <p className="text-sm text-gray-500 mt-2">{error.message}</p>
       </div>
@@ -31,14 +31,14 @@ export const Feed: React.FC<FeedProps> = ({ className = '' }) => {
 
   if (!posts || posts.length === 0) {
     return (
-      <div className={`max-w-md mx-auto px-4 py-8 text-center ${className}`}>
+      <div className={`max-w-md mx-auto px-4 py-6 sm:py-8 text-center ${className}`}>
         <p className="text-gray-500">No posts yet. Be the first to share!</p>
       </div>
     );
   }
 
   return (
-    <div className={`py-6 ${className}`}>
+    <div className={`py-4 sm:py-6 px-4 sm:px-0 flex flex-col items-center ${className}`}>
       {posts.map((post) => (
         <PostCard
           key={post.id}
