@@ -18,7 +18,7 @@ interface ProfileHeaderProps {
 }
 
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({
-  avatarSrc = '/placeholder-user.jpg',
+  avatarSrc ,
   avatarAlt = 'Profile avatar',
   posts = 42,
   followers = 1280,

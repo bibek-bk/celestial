@@ -1,3 +1,4 @@
+// src/app/routes/router.tsx
 import React, { Suspense, lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import { PublicLayout, AuthenticatedLayout } from '@/app/layout';
@@ -5,41 +6,33 @@ import { RequireAuth } from '@/shared/components/guards/RequireAuth';
 import { RedirectIfAuthenticated } from '@/shared/components/guards/RedirectIfAuthenticated';
 import { RouteErrorBoundary } from './ErrorBoundary';
 import { NotFound } from './NotFound';
+import { RouteLoader } from '@/shared/components/ui/RouteLoader';
+import { ROUTES } from '@/shared/constants/routes';
 
-// Lazy pages (from src/pages)
+// Lazy-loaded pages
 const FeedPage = lazy(() => import('@/pages/FeedPage'));
 const ProfilePage = lazy(() => import('@/pages/ProfilePage'));
 const AuthPage = lazy(() => import('@/pages/AuthPage'));
 const SearchComingSoon = lazy(() => import('@/pages/SearchComingSoon'));
 const MessagesComingSoon = lazy(() => import('@/pages/MessagesComingSoon'));
 
-// Simple role meta and gate
-type AppRole = 'guest' | 'user';
-type RouteMeta = { roles?: AppRole[] };
-
-function withRoleGate(element: React.ReactNode, meta?: RouteMeta) {
-  if (!meta?.roles || meta.roles.length === 0) return element;
-  // For now, map: user-only routes guarded by RequireAuth; guest routes via RedirectIfAuthenticated
-  const requiresUser = meta.roles.includes('user');
-  const guestOnly = meta.roles.includes('guest') && !meta.roles.includes('user');
-  if (requiresUser) {
-    return <RequireAuth to="/login" loadingFallback={null}>{element}</RequireAuth>;
-  }
-  if (guestOnly) {
-    return <RedirectIfAuthenticated to="/app">{element}</RedirectIfAuthenticated>;
-  }
-  return element;
-}
-
-const withSuspense = (node: React.ReactNode) => (
-  <Suspense fallback={<div className="text-white p-6">Loading...</div>}>{node}</Suspense>
+/**
+ * Wrapper for consistent Suspense fallback across all routes
+ */
+const withSuspense = (Component: React.LazyExoticComponent<() => React.JSX.Element>) => (
+  <Suspense fallback={<RouteLoader />}>
+    <Component />
+  </Suspense>
 );
 
 export const router = createBrowserRouter([
+  // ============================================
+  // AUTHENTICATED ROUTES (Protected by layout)
+  // ============================================
   {
-    path: '/',
+    path: ROUTES.HOME,
     element: (
-      <RequireAuth to="/login">
+      <RequireAuth to={ROUTES.LOGIN}>
         <AuthenticatedLayout />
       </RequireAuth>
     ),
@@ -47,39 +40,50 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: withSuspense(withRoleGate(<FeedPage />, { roles: ['user'] })),
+        element: withSuspense(FeedPage),
       },
       {
         path: 'search',
-        element: withSuspense(withRoleGate(<SearchComingSoon />, { roles: ['user'] })),
+        element: withSuspense(SearchComingSoon),
       },
       {
         path: 'messages',
-        element: withSuspense(withRoleGate(<MessagesComingSoon />, { roles: ['user'] })),
+        element: withSuspense(MessagesComingSoon),
       },
       {
         path: 'profile/:id',
-        element: withSuspense(withRoleGate(<ProfilePage />, { roles: ['user'] })),
+        element: withSuspense(ProfilePage),
       },
     ],
   },
+
+  // ============================================
+  // PUBLIC ROUTES (Guest-accessible)
+  // ============================================
   {
-    // Pathless layout so it doesn't shadow the authenticated '/' branch
     element: <PublicLayout />,
     errorElement: <RouteErrorBoundary />,
     children: [
       {
-        path: '/login',
-        element: withSuspense(withRoleGate(<AuthPage />, { roles: ['guest'] })),
+        path: ROUTES.LOGIN,
+        element: (
+          <RedirectIfAuthenticated to={ROUTES.HOME}>
+            {withSuspense(AuthPage)}
+          </RedirectIfAuthenticated>
+        ),
       },
       {
         path: '/public/profile/:id',
-        // Public profile page viewable by guests; actions inside page should self-guard
-        element: withSuspense(<ProfilePage />),
+        element: withSuspense(ProfilePage),
       },
     ],
   },
-  { path: '*', element: <NotFound /> },
+
+  // ============================================
+  // FALLBACK
+  // ============================================
+  {
+    path: '*',
+    element: <NotFound />,
+  },
 ]);
-
-

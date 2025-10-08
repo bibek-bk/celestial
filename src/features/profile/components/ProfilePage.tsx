@@ -49,10 +49,9 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
   const { userId } = useAuth();
   const { profile, isLoading } = useProfile(profileId ?? userId ?? '');
   
+  
   // Check if viewing own profile
   const isOwnProfile = profileId === userId;
-
-
 
   const handleFollow = () => {
     if (onFollow) {
