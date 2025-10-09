@@ -48,7 +48,7 @@ export default function AuthForm() {
             },
           }}
           theme='dark'
-          providers={['google', 'apple']}
+          providers={['google']}
 
         />
         {/* </div> */}

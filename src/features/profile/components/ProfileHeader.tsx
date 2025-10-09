@@ -10,8 +10,11 @@ interface ProfileHeaderProps {
   followers?: number;
   following?: number;
   onFollow?: () => void;
+  onEditProfile?: () => void;
   isFollowing?: boolean;
+  isOwnProfile?: boolean;
   className?: string;
+  isLoading: boolean;
 }
 
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({
@@ -21,8 +24,10 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   followers = 1280,
   following = 156,
   onFollow,
+  onEditProfile,
   isFollowing = false,
-  className = ''
+  isOwnProfile = false,
+  className = '',
 }) => {
   return (
     <div className={`flex flex-col sm:flex-row items-start sm:items-center gap-4 ${className}`}>
@@ -47,31 +52,57 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           />
         </div>
 
-        {/* Follow Button */}
-        <Button
-          onClick={onFollow}
-          aria-label={isFollowing ? 'Unfollow user' : 'Follow user'}
-          aria-pressed={isFollowing}
-          className="w-full sm:w-auto sm:min-w-[120px] gap-2"
-        >
-          {isFollowing ? 'Following' : 'Follow'}
-          <svg
-            width="12"
-            height="12"
-            viewBox="0 0 12 12"
-            fill="none"
-            className="opacity-80"
-            aria-hidden="true"
+        {/* Follow/Edit Profile Button */}
+        {isOwnProfile ? (
+          <Button
+            onClick={onEditProfile}
+            aria-label="Edit profile"
+            className="w-full sm:w-auto sm:min-w-[120px] gap-2"
           >
-            <path
-              d="M3 4.5L6 7.5L9 4.5"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </Button>
+            Edit Profile
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              className="opacity-80"
+              aria-hidden="true"
+            >
+              <path
+                d="M8.5 1.5L10.5 3.5L3.5 10.5L1.5 10.5L1.5 8.5L8.5 1.5Z"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Button>
+        ) : (
+          <Button
+            onClick={onFollow}
+            aria-label={isFollowing ? 'Unfollow user' : 'Follow user'}
+            aria-pressed={isFollowing}
+            className="w-full sm:w-auto sm:min-w-[120px] gap-2"
+          >
+            {isFollowing ? 'Following' : 'Follow'}
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 12 12"
+              fill="none"
+              className="opacity-80"
+              aria-hidden="true"
+            >
+              <path
+                d="M3 4.5L6 7.5L9 4.5"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Button>
+        )}
       </div>
     </div>
   );
