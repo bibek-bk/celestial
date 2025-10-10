@@ -23,25 +23,25 @@ export interface DbPostRow {
 export const postsApi = {
 
 
-async uploadImage(file: File, userId: string): Promise<string> {
+  async uploadImage(file: File, userId: string): Promise<string> {
     const fileExt = file.name.split('.').pop();
     const fileName = `${userId}/${Date.now()}.${fileExt}`;
-    
+
     // Removed the 'posts/' prefix - just use fileName directly
-    
+
     const { data, error } = await supabase.storage
       .from('post-images')
       .upload(fileName, file, {  // ← Changed from filePath to fileName
         cacheControl: '3600',
         upsert: false,
       });
-  
+
     if (error) throw error;
-  
+
     const { data: urlData } = supabase.storage
       .from('post-images')
       .getPublicUrl(data.path);
-  
+
     return urlData.publicUrl;
   },
   async createPost(payload: CreatePostPayload): Promise<DbPostRow> {
@@ -73,7 +73,7 @@ async uploadImage(file: File, userId: string): Promise<string> {
         )
       `)
       .order('created_at', { ascending: false });
-  
+
     if (error) throw error;
     return data as DbPostRow[];
   },

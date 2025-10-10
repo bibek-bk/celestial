@@ -2,9 +2,7 @@ import React from 'react';
 
 interface BioProps {
   name?: string;
-  subtitle?: string;
   bio?: string;
-  location?: string;
   className?: string;
 }
 

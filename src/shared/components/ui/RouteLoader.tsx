@@ -1,4 +1,4 @@
-// src/shared/components/ui/RouteLoader.tsx
+
 import React from 'react';
 
 /**

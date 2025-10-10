@@ -1,4 +1,4 @@
-import { useFollowUserMutation, useUnFollowUserMutation } from "@/services/follow/mutation"
+import { useFollowUserMutation, useUnFollowUserMutation } from "@/services/follow/mutations"
 import { useIsFollowing } from "@/services/follow/queries"
 
 export const useToggleFollow = (userId : string)=>{

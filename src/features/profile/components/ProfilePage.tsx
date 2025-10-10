@@ -8,6 +8,7 @@ import PostsPlaceholder from './PostsPlaceholder';
 import ReelsPlaceholder from './ReelsPlaceholder';
 import { useProfile } from '../hooks/useProfile';
 import { useAuth } from '@/shared/hooks/useAuth';
+import UpdateProfile from './UpdateProfile';
 
 interface User {
   avatar_url: string;
@@ -32,8 +33,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
   user = {
     avatar_url: '/placeholder-user.jpg',
     avatarAlt: 'Profile avatar',
-    name: 'Unblast',
-    subtitle: 'E-commerce Website',
+    name: '',
     bio: 'Selective free resources for designers @unblast.',
     location: 'Melbourne, Victoria, Australia',
     posts: 42,
@@ -41,28 +41,23 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
     following: 156,
     isFollowing: false
   },
-  onFollow,
   className = ''
 }) => {
   const [activeTab, setActiveTab] = useState<'posts' | 'reels'>('posts');
   const { id: profileId } = useParams<{ id: string }>();
   const { userId } = useAuth();
   const { profile, isLoading } = useProfile(profileId ?? userId ?? '');
-  
+  const [showEditModal, setShowEditModal] = useState(false)
+
   console.log(profile,'from profilePage')
   // Check if viewing own profile
   const isOwnProfile = profileId === userId;
 
-  const handleFollow = () => {
-    if (onFollow) {
-      onFollow(user);
-    }
-  };
+ 
 
   const handleEditProfile = () => {
     // Dummy edit profile handler
-    console.log('Edit profile clicked');
-    alert('Edit Profile functionality will be implemented soon!');
+    setShowEditModal(true)
   };
 
   const handleTabChange = (tab: 'posts' | 'reels') => {
@@ -74,6 +69,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
       {/* Main Container */}
       <div className="max-w-full sm:max-w-[680px] mx-auto">
         {/* Profile Header - starts 20px from top on mobile, 32px on tablet/desktop */}
+        {showEditModal && <UpdateProfile onClose={() => setShowEditModal(false)} />}
         <div className="pt-5 sm:pt-8">
           <ProfileHeader
             avatarSrc={profile?.avatar_url || user.avatar_url}
@@ -81,13 +77,11 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
             posts={user.posts}
             followers={profile?.followers_count || 0}
             following={profile?.following_count || 0}
-            onFollow={handleFollow}
             onEditProfile={handleEditProfile}
             isFollowing={user.isFollowing}
             isOwnProfile={isOwnProfile}
             isLoading={isLoading}
-            userId={profileId}
-            
+            userId={profileId} 
           />
         </div>
 
@@ -95,9 +89,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
         <div className="mt-3">
           <Bio
             name={profile?.username || user.name}            
-            subtitle={user.subtitle}
             bio={profile?.bio || user.bio}
-            location={user.location}
           />
         </div>
 
