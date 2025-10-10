@@ -49,7 +49,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
   const { userId } = useAuth();
   const { profile, isLoading } = useProfile(profileId ?? userId ?? '');
   
-  
+  console.log(profile,'from profilePage')
   // Check if viewing own profile
   const isOwnProfile = profileId === userId;
 
@@ -79,20 +79,22 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
             avatarSrc={profile?.avatar_url || user.avatar_url}
             avatarAlt={user.avatarAlt}
             posts={user.posts}
-            followers={user.followers}
-            following={user.following}
+            followers={profile?.followers_count || 0}
+            following={profile?.following_count || 0}
             onFollow={handleFollow}
             onEditProfile={handleEditProfile}
             isFollowing={user.isFollowing}
             isOwnProfile={isOwnProfile}
             isLoading={isLoading}
+            userId={profileId}
+            
           />
         </div>
 
         {/* Bio Section */}
         <div className="mt-3">
           <Bio
-            name={profile?.full_name || user.name}            
+            name={profile?.username || user.name}            
             subtitle={user.subtitle}
             bio={profile?.bio || user.bio}
             location={user.location}

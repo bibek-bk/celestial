@@ -1,4 +1,4 @@
-import React from 'react';
+
 
 interface MetricsProps {
   posts?: number;
@@ -13,6 +13,7 @@ const Metrics: React.FC<MetricsProps> = ({
   following = 0, 
   className = '' 
 }) => {
+
   const metrics = [
     { label: 'Posts', value: posts },
     { label: 'Followers', value: followers },

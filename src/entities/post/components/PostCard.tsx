@@ -10,6 +10,8 @@ import {
   UserSummary,
   PostInteractionHandlers
 } from '@/entities/post/models/types';
+import { useNavigate } from 'react-router-dom';
+// import { Navigate } from 'react-router-dom';
 
 interface PostCardProps extends PostInteractionHandlers {
   id: PostId;
@@ -38,6 +40,7 @@ export const PostCard: React.FC<PostCardProps> = ({
   onLike,
 
 }) => {
+  const navigate = useNavigate();
   const handleLike = () => onLike?.(id);
 
   return (
@@ -55,6 +58,9 @@ export const PostCard: React.FC<PostCardProps> = ({
             <button 
               className="font-semibold text-white hover:underline focus:outline-none"
               aria-label={`View ${user.username}'s profile`}
+              onClick={() => {
+                navigate(`/profile/${user.username}`);
+              }}
             >
               {user.username}
             </button>
