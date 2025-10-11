@@ -2,10 +2,14 @@ import { followApi } from "@/api/follow.api"
 import { useMutation, useQueryClient, } from "@tanstack/react-query"
 import { profileKeys } from "../profiles/keys"
 import { User } from "@/entities/user/types"
+import { useAuth } from "@/shared/hooks/useAuth"
+import { useToast } from '@/shared/components/ui/useToast'
 
 
 export const useFollowUserMutation = () => {
     const queryClient = useQueryClient()
+    const { userId: currentUserId } = useAuth()
+    const { success, error } = useToast()
 
     return useMutation({
         mutationFn: (userId: string) => followApi.followUser(userId),
@@ -41,6 +45,10 @@ export const useFollowUserMutation = () => {
         },
 
         onError: (err, userId, Context) => {
+            error(
+                'Failed to follow user',
+                `Failed to follow ${Context?.previousProfile?.username || 'user'}`
+            );
             //rollback on error
             if (Context?.previousFollowStatus !== undefined) {
                 queryClient.setQueryData(['is-following', userId], Context.previousFollowStatus)
@@ -50,10 +58,25 @@ export const useFollowUserMutation = () => {
             }
 
         },
+        onSuccess: (data, userId) => {
+
+            const profile = queryClient.getQueryData<User>(
+                profileKeys.detail(userId)
+            );
+
+            success(
+                'Successfully followed!',
+                profile?.username
+                    ? `You are now following ${profile.username}`
+                    : 'You are now following this user'
+            );
+
+        },
         onSettled: (data, err, userId) => {
             // always sync with server by invalidateing related data (succes or error)
             queryClient.invalidateQueries({ queryKey: ['is-following', userId] })
             queryClient.invalidateQueries({ queryKey: profileKeys.detail(userId) })
+            queryClient.invalidateQueries({ queryKey: profileKeys.detail(currentUserId) })
         }
     })
 }
@@ -61,6 +84,8 @@ export const useFollowUserMutation = () => {
 
 export const useUnFollowUserMutation = () => {
     const queryClient = useQueryClient()
+    const { success, error } = useToast()
+    
     return useMutation({
         mutationFn: (userId: string) => followApi.unFollowUser(userId),
         onMutate: async (userId: string) => {
@@ -83,8 +108,26 @@ export const useUnFollowUserMutation = () => {
 
             return { previousFollowStatus, previousProfile }
         },
+        onSuccess: (data, userId) => {
+
+            const profile = queryClient.getQueryData<User>(
+                profileKeys.detail(userId)
+            );
+
+            success(
+                'Successfully unfollowed!',
+                profile?.username
+                    ? `You are no longer following ${profile.username}`
+                    : 'You are no longer following this user'
+            );
+
+        },
         onError: (err, userId, Context) => {
             //rollback
+            error(
+                'Failed to unfollow user',
+                'Something went wrong. Please try again.'
+            );
             if (Context?.previousFollowStatus !== undefined) {
                 queryClient.setQueryData(['is-following', userId], Context.previousFollowStatus)
             }
@@ -95,7 +138,7 @@ export const useUnFollowUserMutation = () => {
         onSettled: (data, err, userId) => {
             // to keep sync with server - always invalidate the queries
             queryClient.invalidateQueries({ queryKey: ['is-following', userId] })
-            queryClient.invalidateQueries({ queryKey : profileKeys.detail(userId) })
+            queryClient.invalidateQueries({ queryKey: profileKeys.detail(userId) })
         }
 
     })

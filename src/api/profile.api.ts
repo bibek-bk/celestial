@@ -56,3 +56,15 @@ export async function uploadAvatar(file: File, userId: string): Promise<string> 
 
     return urlData.publicUrl;
 }
+
+export const fetchUserPosts = async (userId: string) => {
+    console.log('im called');
+    
+  const { data, error } = await supabase
+    .from('posts')
+    .select('*')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false });
+
+  return { data, error };
+};

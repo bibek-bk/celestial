@@ -13,6 +13,7 @@ export interface DbPostRow {
   image_url: string;
   created_at: string;
   updated_at: string;
+  like_count:number;
   profiles?: {  // Add this
     id: string;
     username: string;
@@ -67,7 +68,10 @@ export const postsApi = {
       const { error } = await supabase.storage.from('post-images').remove([path]);
       if (error) throw error;
     }
-  },  async getAllPosts(): Promise<DbPostRow[]> {
+  },
+  async getAllPosts(): Promise<DbPostRow[]> {
+    console.log('from getAllPosts');
+
     const { data, error } = await supabase
       .from('posts')
       .select(`
@@ -79,7 +83,7 @@ export const postsApi = {
         )
       `)
       .order('created_at', { ascending: false });
-console.log(data)
+    console.log(data)
     if (error) throw error;
     return data as DbPostRow[];
   },

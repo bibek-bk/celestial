@@ -17,7 +17,7 @@ const PostsReelsToggle: React.FC<PostsReelsToggleProps> = ({
         {/* Posts Tab */}
         <button
           onClick={() => onTabChange('posts')}
-          className={`flex-1 py-3 px-4 text-center font-medium text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-offset-2 focus:ring-offset-[var(--color-background)] ${
+          className={`flex-1 py-3 px-4 text-center font-medium text-sm transition-colors duration-200  ${
             activeTab === 'posts'
               ? 'text-[var(--color-text-primary)] ]'
               : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
@@ -78,7 +78,7 @@ const PostsReelsToggle: React.FC<PostsReelsToggleProps> = ({
         {/* Reels Tab */}
         <button
           onClick={() => onTabChange('reels')}
-          className={`flex-1 py-3 px-4 text-center font-medium text-sm transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:ring-offset-2 focus:ring-offset-[var(--color-background)] ${
+          className={`flex-1 py-3 px-4 text-center font-medium text-sm transition-colors duration-200  ${
             activeTab === 'reels'
               ? 'text-[var(--color-text-primary)]]'
               : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
@@ -87,7 +87,7 @@ const PostsReelsToggle: React.FC<PostsReelsToggleProps> = ({
           role="tab"
           aria-selected={activeTab === 'reels'}
         >
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center justify-center gap-2 border-l">
             <svg 
               width="16" 
               height="16" 

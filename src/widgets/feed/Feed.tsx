@@ -10,9 +10,10 @@ interface FeedProps {
 export const Feed: React.FC<FeedProps> = ({ className = '' }) => {
   const { data: posts, isLoading, error } = useGetAllPosts();
 
+  // console.log(posts)
   if (isLoading) {
     return (
-      <div className={`max-w-md mx-auto px-4 py-4 sm:py-6 ${className}`}>
+      <div className={`max-w-md  w-full mx-auto px-4 py-4 sm:py-6 ${className}`}>
         <SkeletonPost />
         <SkeletonPost />
         <SkeletonPost />
@@ -36,7 +37,7 @@ export const Feed: React.FC<FeedProps> = ({ className = '' }) => {
       </div>
     );
   }
-console.log(posts)
+
   return (
     <div className={`py-4 sm:py-6 px-4 sm:px-0 flex flex-col items-center ${className}`}>
       {posts.map((post) => (
@@ -46,7 +47,7 @@ console.log(posts)
           user={{
             username: post.profiles?.username || 'Unknown User',
             avatar: post.profiles?.avatar_url || '/placeholder-user.jpg',
-            isVerified: false
+            id:post.profiles?.id
           }}
           media={[
             {
@@ -56,15 +57,12 @@ console.log(posts)
               alt: post.caption
             }
           ]}
+          isLoading={isLoading}
           caption={post.caption}
-          likes={undefined}
+          likes={post.like_count}
           isLiked={undefined}
-          comments={[]}
-          totalComments={0}
-          shares={0}
           isSaved={false}
           timestamp={post.created_at}
-          location={undefined}
         />
       ))}
     </div>

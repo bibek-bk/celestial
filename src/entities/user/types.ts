@@ -9,7 +9,7 @@ export interface User {
   bio: string | null;
   followers_count: number;
   following_count: number;
-//   posts_count: number;
+  posts_count: number;
   created_at: string;
 }
 

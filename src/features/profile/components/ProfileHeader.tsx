@@ -26,6 +26,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   following = 156,
   userId,
   onEditProfile,
+  isLoading,
   isOwnProfile = false,
   className = '',
 }) => {
@@ -37,6 +38,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
         <Avatar
           src={avatarSrc}
           alt={avatarAlt}
+          isLoading={isLoading}
           size="mobile"
           className="sm:w-[110px] sm:h-[110px] lg:w-32 lg:h-32"
         />

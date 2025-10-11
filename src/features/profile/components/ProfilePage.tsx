@@ -4,11 +4,11 @@ import ProfileHeader from './ProfileHeader';
 import Bio from './Bio';
 // import StoriesRow from './StoriesRow';
 import PostsReelsToggle from './PostsReelsToggle';
-import PostsPlaceholder from './PostsPlaceholder';
 import ReelsPlaceholder from './ReelsPlaceholder';
 import { useAuth } from '@/shared/hooks/useAuth';
 import UpdateProfile from './UpdateProfile';
-import { useProfileQuery } from '@/services/profiles/queries';
+import { useGetUserPosts, useProfileQuery } from '@/services/profiles/queries';
+import PostsGrid from './PostsGrid';
 
 interface User {
   avatar_url: string;
@@ -32,7 +32,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
     avatar_url: '/placeholder-user.jpg',
     avatarAlt: 'Profile avatar',
     name: '',
-    bio: 'Selective free resources for designers @unblast.',
+    bio: 'Bio',
     posts: 0,
 
   },
@@ -41,14 +41,13 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
   const [activeTab, setActiveTab] = useState<'posts' | 'reels'>('posts');
   const { id: profileId } = useParams<{ id: string }>();
   const { userId } = useAuth();
-  const { data : profile, isLoading } = useProfileQuery(profileId ?? userId ?? '');
+  const { data: profile, isLoading } = useProfileQuery(profileId ?? userId ?? '');
   const [showEditModal, setShowEditModal] = useState(false)
+  const { data: userPosts, isLoading: isGetUserPostLoading } = useGetUserPosts(profileId ?? userId ?? '')
 
-  console.log(profile,'from profilePage')
-  // Check if viewing own profile
+
   const isOwnProfile = profileId === userId;
 
- 
 
   const handleEditProfile = () => {
     setShowEditModal(true)
@@ -68,22 +67,22 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
           <ProfileHeader
             avatarSrc={profile?.avatar_url || user.avatar_url}
             avatarAlt={user.avatarAlt}
-            posts={user.posts}
+            posts={profile?.posts_count || 0 }
             followers={profile?.followers_count || 0}
             following={profile?.following_count || 0}
             onEditProfile={handleEditProfile}
-      
             isOwnProfile={isOwnProfile}
             isLoading={isLoading}
-            userId={profileId} 
+            userId={profileId}
           />
         </div>
 
         {/* Bio Section */}
         <div className="mt-3">
           <Bio
-            name={profile?.username || user.name}            
+            name={profile?.username || user.name}
             bio={profile?.bio || user.bio}
+            isLoading={isLoading}
           />
         </div>
 
@@ -102,7 +101,11 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
         />
 
         {/* Content based on active tab */}
-        {activeTab === 'posts' ? <PostsPlaceholder /> : <ReelsPlaceholder />}
+        {activeTab === 'posts' ?
+          <PostsGrid
+            posts={userPosts?.data}
+            isLoading={isGetUserPostLoading}
+          /> : <ReelsPlaceholder />}
       </div>
     </div>
   );

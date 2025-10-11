@@ -1,38 +1,6 @@
-import React, { createContext, useCallback, useContext, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-
-type ToastVariant = 'success' | 'error' | 'info' | 'warning';
-
-export interface ToastOptions {
-  id?: string;
-  title?: string;
-  description?: string;
-  variant?: ToastVariant;
-  durationMs?: number;
-}
-
-export interface Toast extends Required<Omit<ToastOptions, 'id'>> {
-  id: string;
-}
-
-interface ToastContextValue {
-  show: (opts: ToastOptions) => string;
-  dismiss: (id: string) => void;
-  success: (title: string, description?: string, opts?: Omit<ToastOptions, 'title' | 'description' | 'variant'>) => string;
-  error: (title: string, description?: string, opts?: Omit<ToastOptions, 'title' | 'description' | 'variant'>) => string;
-}
-
-const ToastContext = createContext<ToastContextValue | null>(null);
-
-function useToastInternal(): ToastContextValue {
-  const ctx = useContext(ToastContext);
-  if (!ctx) throw new Error('useToast must be used within ToastProvider');
-  return ctx;
-}
-
-export function useToast(): ToastContextValue {
-  return useToastInternal();
-}
+import { ToastOptions, Toast, ToastContextValue, ToastContext } from './useToast';
 
 const MAX_TOASTS = 4;
 const DEFAULT_DURATION = 4000;
@@ -42,12 +10,15 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   const timeoutsRef = useRef<Record<string, number>>({});
 
   const dismiss = useCallback((id: string) => {
-    setToasts((prev) => prev.filter((t) => t.id !== id));
     const handle = timeoutsRef.current[id];
     if (handle) {
       window.clearTimeout(handle);
       delete timeoutsRef.current[id];
     }
+    setToasts((prev) => prev.map((t) => (t.id === id ? { ...t, isExiting: true } : t)));
+    setTimeout(() => {
+      setToasts((prev) => prev.filter((t) => t.id !== id));
+    }, 300);
   }, []);
 
   const show = useCallback((opts: ToastOptions) => {
@@ -58,6 +29,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
       description: opts.description ?? '',
       variant: opts.variant ?? 'info',
       durationMs: opts.durationMs ?? DEFAULT_DURATION,
+      isExiting: false,
     } as Toast;
 
     setToasts((prev) => {
@@ -78,6 +50,37 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   return (
     <ToastContext.Provider value={value}>
       {children}
+      <style>{`
+        @keyframes slideInUp {
+          from {
+            opacity: 0;
+            transform: translateY(16px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes slideOutUp {
+          from {
+            opacity: 1;
+            transform: translateY(0);
+          }
+          to {
+            opacity: 0;
+            transform: translateY(-16px);
+          }
+        }
+
+        .toast-enter {
+          animation: slideInUp 0.3s ease-out;
+        }
+
+        .toast-exit {
+          animation: slideOutUp 0.3s ease-out forwards;
+        }
+      `}</style>
       <ToastViewport toasts={toasts} onDismiss={dismiss} />
     </ToastContext.Provider>
   );
@@ -86,7 +89,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
 function ToastViewport({ toasts, onDismiss }: { toasts: Toast[]; onDismiss: (id: string) => void }) {
   const container = document.getElementById('toast-root') || document.body;
   return createPortal(
-    <div className="fixed z-[100] bottom-4 right-4 flex flex-col gap-3 w-[min(92vw,380px)]">
+    <div className="fixed z-[100] top-4 right-8 flex flex-col gap-3 w-[min(92vw,380px)]">
       {toasts.map((t) => (
         <ToastCard key={t.id} toast={t} onDismiss={() => onDismiss(t.id)} />
       ))}
@@ -95,7 +98,7 @@ function ToastViewport({ toasts, onDismiss }: { toasts: Toast[]; onDismiss: (id:
   );
 }
 
-function variantClasses(variant: ToastVariant) {
+function variantClasses(variant: 'success' | 'error' | 'info' | 'warning') {
   switch (variant) {
     case 'success':
       return 'border-green-500/40 bg-green-500/10 text-green-200';
@@ -109,10 +112,15 @@ function variantClasses(variant: ToastVariant) {
 }
 
 function ToastCard({ toast, onDismiss }: { toast: Toast; onDismiss: () => void }) {
-  const { title, description, variant } = toast;
+  const { title, description, variant, isExiting } = toast;
+
+  const handleDismiss = () => {
+    onDismiss();
+  };
+
   return (
     <div
-      className={`w-full border rounded-xl shadow-lg px-4 py-3 backdrop-blur-md ${variantClasses(variant)}`}
+      className={`w-full border rounded-xl shadow-lg px-4 py-3 backdrop-blur-md ${variantClasses(variant)} ${!isExiting ? 'toast-enter' : 'toast-exit'}`}
       role="status"
       aria-live="polite"
     >
@@ -125,7 +133,7 @@ function ToastCard({ toast, onDismiss }: { toast: Toast; onDismiss: () => void }
           type="button"
           aria-label="Dismiss notification"
           className="shrink-0 px-2 py-1 rounded-md hover:bg-white/10 transition-colors"
-          onClick={onDismiss}
+          onClick={handleDismiss}
         >
           ✕
         </button>
@@ -133,5 +141,3 @@ function ToastCard({ toast, onDismiss }: { toast: Toast; onDismiss: () => void }
     </div>
   );
 }
-
-
