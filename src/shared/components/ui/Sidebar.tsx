@@ -36,7 +36,7 @@ export function Sidebar() {
   }, [navigate, isSigningOut, showError]);
 
   return (
-    <div className="w-60 bg-[var(--color-background)] border-r border-[var(--color-border)] flex flex-col p-6 sticky top-0 h-screen">
+    <div className="w-60 bg-[var(--color-background)] border-r border-[var(--color-border)] flex-col p-6 sticky top-0 h-screen hidden lg:flex">
       {/* App Name */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">

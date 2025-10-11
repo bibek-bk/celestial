@@ -36,7 +36,7 @@ export const Feed: React.FC<FeedProps> = ({ className = '' }) => {
       </div>
     );
   }
-
+console.log(posts)
   return (
     <div className={`py-4 sm:py-6 px-4 sm:px-0 flex flex-col items-center ${className}`}>
       {posts.map((post) => (
@@ -44,7 +44,7 @@ export const Feed: React.FC<FeedProps> = ({ className = '' }) => {
           key={post.id}
           id={post.id}
           user={{
-            username: post.profiles?.full_name || 'Unknown User',
+            username: post.profiles?.username || 'Unknown User',
             avatar: post.profiles?.avatar_url || '/placeholder-user.jpg',
             isVerified: false
           }}

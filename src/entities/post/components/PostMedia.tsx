@@ -32,7 +32,7 @@ export const PostMedia: React.FC<PostMediaProps> = ({ media }) => {
       {media.map((item) => (
         <div
           key={item.id}
-          className="w-full aspect-square bg-gray-900 overflow-hidden rounded-md relative"
+          className="w-full aspect-square bg-gray-900 overflow-hidden  relative"
         >
           {loadingStates[item.id] && (
             <Skeleton

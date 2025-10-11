@@ -6,17 +6,15 @@ import Bio from './Bio';
 import PostsReelsToggle from './PostsReelsToggle';
 import PostsPlaceholder from './PostsPlaceholder';
 import ReelsPlaceholder from './ReelsPlaceholder';
-import { useProfile } from '../hooks/useProfile';
 import { useAuth } from '@/shared/hooks/useAuth';
 import UpdateProfile from './UpdateProfile';
+import { useProfileQuery } from '@/services/profiles/queries';
 
 interface User {
   avatar_url: string;
   avatarAlt: string;
   name: string;
-  subtitle: string;
   bio: string;
-  location: string;
   posts: number;
   followers: number;
   following: number;
@@ -35,18 +33,15 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
     avatarAlt: 'Profile avatar',
     name: '',
     bio: 'Selective free resources for designers @unblast.',
-    location: 'Melbourne, Victoria, Australia',
-    posts: 42,
-    followers: 1280,
-    following: 156,
-    isFollowing: false
+    posts: 0,
+
   },
   className = ''
 }) => {
   const [activeTab, setActiveTab] = useState<'posts' | 'reels'>('posts');
   const { id: profileId } = useParams<{ id: string }>();
   const { userId } = useAuth();
-  const { profile, isLoading } = useProfile(profileId ?? userId ?? '');
+  const { data : profile, isLoading } = useProfileQuery(profileId ?? userId ?? '');
   const [showEditModal, setShowEditModal] = useState(false)
 
   console.log(profile,'from profilePage')
@@ -56,7 +51,6 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
  
 
   const handleEditProfile = () => {
-    // Dummy edit profile handler
     setShowEditModal(true)
   };
 
@@ -78,7 +72,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
             followers={profile?.followers_count || 0}
             following={profile?.following_count || 0}
             onEditProfile={handleEditProfile}
-            isFollowing={user.isFollowing}
+      
             isOwnProfile={isOwnProfile}
             isLoading={isLoading}
             userId={profileId} 

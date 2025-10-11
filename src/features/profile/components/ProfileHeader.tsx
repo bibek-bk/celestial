@@ -5,24 +5,23 @@ import Metrics from './Metrics';
 import { FollowButton } from '@/features/follow/FollowButton';
 
 interface ProfileHeaderProps {
-  userId:string;
+  userId: string;
   avatarSrc?: string;
   avatarAlt?: string;
   posts?: number;
   followers?: number;
   following?: number;
-  onFollow?: () => void;
   onEditProfile?: () => void;
-  isFollowing?: boolean;
+ 
   isOwnProfile?: boolean;
   className?: string;
   isLoading: boolean;
 }
 
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({
-  avatarSrc ,
+  avatarSrc,
   avatarAlt = 'Profile avatar',
-  posts = 42,
+  posts = 0,
   followers = 1280,
   following = 156,
   userId,
@@ -32,10 +31,10 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
 }) => {
 
   return (
-    <div className={`flex flex-col sm:flex-row items-start sm:items-center gap-4 ${className}`}>
+    <div className={`flex  items-start  sm:items-center gap-4 ${className}`}>
       {/* Avatar */}
-      <div className="flex-shrink-0 ml-4 sm:ml-6">
-        <Avatar 
+      <div className="ml-4 sm:ml-6">
+        <Avatar
           src={avatarSrc}
           alt={avatarAlt}
           size="mobile"
@@ -44,10 +43,10 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
       </div>
 
       {/* Metrics and Follow Button */}
-      <div className="flex-1 flex flex-col sm:flex-row sm:items-center sm:justify-between w-full px-4 sm:px-0">
+      <div className=" flex flex-col items-center sm:flex-row sm:items-center sm:justify-between  w-full px-4  sm:px-6">
         {/* Metrics */}
-        <div className="mb-4 sm:mb-0">
-          <Metrics 
+        <div className="mb-4 sm:mb-0 flex justify-center  mx-auto">
+          <Metrics
             posts={posts}
             followers={followers}
             following={following}
@@ -81,7 +80,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           </Button>
         ) : (
           <FollowButton
-          userId={userId}
+            userId={userId}
           />
         )}
       </div>

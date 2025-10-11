@@ -22,7 +22,7 @@ export function NavBar() {
   const isMessagesActive = location.pathname === '/messages';
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 md:hidden bg-[var(--color-background)] border-t border-[var(--color-border)] px-2 py-2 sm:px-4 z-50">
+    <nav className="fixed bottom-0 left-0 right-0 lg:hidden bg-[var(--color-background)] border-t border-[var(--color-border)] px-2 py-2 sm:px-4 z-50">
       <div className="max-w-screen-xl mx-auto">
         <ul className="flex items-center justify-around">
           {items.map((item) => {

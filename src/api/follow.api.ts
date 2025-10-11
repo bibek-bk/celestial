@@ -25,6 +25,8 @@ export const followApi = {
 
     unFollowUser: async (followingId: string): Promise<void> => {
         const { data: { user } } = await supabase.auth.getUser()
+        if (!user) throw Error('User not authenticated')
+        
         const { error } = await supabase
             .from('follows')
             .delete()
@@ -33,7 +35,6 @@ export const followApi = {
 
         if (error) throw error
     },
-
     getFollowers: async (
         userId: string,
         limit: number = 20,
