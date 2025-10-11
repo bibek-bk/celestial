@@ -1,10 +1,12 @@
-export { colors } from './colors';
-export { typography } from './typography';
-export { spacing } from './spacing';
-export { shadows } from './shadows';
-export { borderRadius } from './borderRadius';
-export { transitions } from './transitions';
-export { zIndex } from './zIndex';
+import { colors } from './colors';
+import { typography } from './typography';
+import { spacing } from './spacing';
+import { shadows } from './shadows';
+import { borderRadius } from './borderRadius';
+import { transitions } from './transitions';
+import { zIndex } from './zIndex';
+
+export { colors, typography, spacing, shadows, borderRadius, transitions, zIndex };
 
 export const tokens = {
   colors,

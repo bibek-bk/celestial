@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+
 import { cn } from '../../utils/cn';
 import { Skeleton } from '../Skeleton/Skeleton';
 
@@ -9,14 +9,14 @@ export interface AvatarProps {
   alt?: string;
   size?: LegacySize;
   className?: string;
+  isLoading: boolean;
 }
 
 const sizeToClasses: Record<LegacySize, string> = {
   sm: 'w-8 h-8',
   md: 'w-10 h-10',
   lg: 'w-12 h-12',
-  mobile: 'w-22 h-22',
-  tablet: 'w-[110px] h-[110px]',
+  mobile: 'w-[88px] h-[88px]', tablet: 'w-[110px] h-[110px]',
   desktop: 'w-32 h-32',
 };
 
@@ -24,40 +24,22 @@ export const Avatar: React.FC<AvatarProps> = ({
   src = '/placeholder-user.jpg',
   alt = 'Profile avatar',
   size = 'md',
+  isLoading,
   className,
 }) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
-
-  const handleImageLoad = () => {
-    setIsLoading(false);
-  };
-
-  const handleImageError = () => {
-    setIsLoading(false);
-    setHasError(true);
-  };
 
   return (
     <div className={cn('relative', sizeToClasses[size], className)}>
-      {isLoading && (
-        <Skeleton
-          variant="circular"
-          className="absolute inset-0 w-full h-full"
-        />
-      )}
-      <img
-        src={hasError ? '/placeholder-user.jpg' : src}
+      {isLoading ? <Skeleton variant="circular" className="bg-gray-700" width='100%'
+        height='100%' /> : <img
+        src={src}
         alt={alt}
         className={cn(
-          'w-full h-full rounded-full object-cover aspect-square',
-          'border border-gray-700 transition-opacity duration-300',
-          isLoading ? 'opacity-0' : 'opacity-100'
+          'w-full h-full rounded-full object-cover',
+          'border border-gray-700',
         )}
-        loading="lazy"
-        onLoad={handleImageLoad}
-        onError={handleImageError}
-      />
+      />}
+
     </div>
   );
 };

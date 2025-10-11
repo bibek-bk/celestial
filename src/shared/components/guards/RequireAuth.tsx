@@ -8,7 +8,7 @@ interface RequireAuthProps {
   to?: string; // redirect path when not authenticated
 }
 
-export function RequireAuth({ children, loadingFallback = null, to = '/login' }: RequireAuthProps) {
+export function RequireAuth({ children, loadingFallback , to = '/login' }: RequireAuthProps) {
   const { isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) return <>{loadingFallback}</>;

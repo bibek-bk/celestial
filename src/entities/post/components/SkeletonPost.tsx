@@ -7,7 +7,7 @@ interface SkeletonPostProps {
 
 export const SkeletonPost: React.FC<SkeletonPostProps> = ({ className = '' }) => {
   return (
-    <div className={`bg-[var(--color-background-secondary)] rounded-lg w-md shadow-sm border border-[var(--color-border)] mb-4 ${className}`}>
+    <div className={`bg-[var(--color-background-secondary)] rounded-lg w-full sm:w-md shadow-sm border border-[var(--color-border)] mb-4 ${className}`}>
       {/* Header Skeleton */}
       <div className="flex items-center p-4">
         <Skeleton variant="circular" width={40} height={40} />
@@ -43,18 +43,9 @@ export const SkeletonPost: React.FC<SkeletonPostProps> = ({ className = '' }) =>
         </div>
       </div>
 
-      {/* Comments Skeleton */}
-      <div className="px-4 pb-3">
-        <div className="space-y-2">
-          <Skeleton variant="text" height={12} width={128} />
-          <Skeleton variant="text" height={12} width={112} />
-        </div>
-      </div>
+     
 
-      {/* Timestamp Skeleton */}
-      <div className="px-4 pb-3">
-        <Skeleton variant="text" height={12} width={64} />
-      </div>
+     
     </div>
   );
 };

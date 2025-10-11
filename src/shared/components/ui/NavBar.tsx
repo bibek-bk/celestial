@@ -2,7 +2,7 @@ import { Home, Search, PlusSquare, MessageCircle, User } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useAuth } from '@/shared/hooks/useAuth';
-import { CreatePostModal } from '@/features/posts';
+import { CreatePostModal } from '@/features/create-post';
 
 export function NavBar() {
   const navigate = useNavigate();
@@ -20,16 +20,20 @@ export function NavBar() {
 
   const isSearchActive = location.pathname === '/search';
   const isMessagesActive = location.pathname === '/messages';
+  const isHomeActive = location.pathname === '/';
+  const isProfileActive = location.pathname === `/profile/${userId}`;
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 md:hidden bg-[var(--color-background)] border-t border-[var(--color-border)] px-2 py-2 sm:px-4 z-50">
+    <nav className="fixed bottom-0 left-0 right-0 lg:hidden bg-[var(--color-background)] border-t border-[var(--color-border)] px-2 py-2 sm:px-4 z-50">
       <div className="max-w-screen-xl mx-auto">
         <ul className="flex items-center justify-around">
           {items.map((item) => {
             const Icon = item.icon;
             const isActive =
+              (item.id === 'home' && isHomeActive) ||
               (item.id === 'search' && isSearchActive) ||
-              (item.id === 'messages' && isMessagesActive);
+              (item.id === 'messages' && isMessagesActive) ||
+              (item.id === 'profile' && isProfileActive);
             return (
               <li key={item.id}>
                 <button

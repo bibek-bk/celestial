@@ -11,11 +11,11 @@ export function AppProviders({ children }: AppProvidersProps) {
   return (
     <ReduxProvider>
       <QueryProvider>
-        <AuthProvider>
-          <ToastProvider>
+        <ToastProvider>
+          <AuthProvider>
             {children}
-          </ToastProvider>
-        </AuthProvider>
+          </AuthProvider>
+        </ToastProvider>
       </QueryProvider>
     </ReduxProvider>
   );

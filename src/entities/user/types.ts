@@ -2,18 +2,20 @@
 export type UserID = string;
 
 export interface User {
-    id: UserID;
-    username?: string;
-    full_name?: string;
-    avatarUrl?: string;
-    avatar_url?: string;
-    bio?: string;
-    createdAt: string;
-    followers_count?: number;
+  id: string;
+  username: string;
+  full_name: string | null;
+  avatar_url: string | null;
+  bio: string | null;
+  followers_count: number;
+  following_count: number;
+  posts_count: number;
+  created_at: string;
 }
+
 
 export interface UpdateUserInput {
     username?: string;
-    avatarUrl?: string;
+    avatar_url?: string;
     bio?: string;
   }

@@ -8,7 +8,7 @@ interface RedirectIfAuthenticatedProps {
   to?: string; // redirect path when authenticated
 }
 
-export function RedirectIfAuthenticated({ children, loadingFallback = null, to = '/app' }: RedirectIfAuthenticatedProps) {
+export function RedirectIfAuthenticated({ children, loadingFallback = null, to = '/' }: RedirectIfAuthenticatedProps) {
   const { isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) return <>{loadingFallback}</>;

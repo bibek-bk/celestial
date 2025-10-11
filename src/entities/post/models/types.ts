@@ -14,7 +14,7 @@ export interface Media {
 export interface UserSummary {
   username: string;
   avatar: string;
-  isVerified?: boolean;
+  id?: string;
 }
 
 export interface Comment {

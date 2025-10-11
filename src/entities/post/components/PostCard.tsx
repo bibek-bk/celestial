@@ -6,10 +6,12 @@ import { Caption } from './Caption';
 import {
   PostId,
   Media,
-  Comment,
   UserSummary,
   PostInteractionHandlers
 } from '@/entities/post/models/types';
+import { useNavigate } from 'react-router-dom';
+import { timeAgo } from '@/shared/utils/timeAgo';
+// import { Navigate } from 'react-router-dom';
 
 interface PostCardProps extends PostInteractionHandlers {
   id: PostId;
@@ -18,13 +20,10 @@ interface PostCardProps extends PostInteractionHandlers {
   caption: string;
   likes?: number;
   isLiked?: boolean;
-  comments: Comment[];
-  totalComments: number;
-  shares: number;
   isSaved: boolean;
   timestamp: string;
-  location?: string;
   className?: string;
+  isLoading:boolean
 }
 
 export const PostCard: React.FC<PostCardProps> = ({
@@ -36,46 +35,42 @@ export const PostCard: React.FC<PostCardProps> = ({
   isLiked,
   className = '',
   onLike,
+  isLoading,
+  timestamp
 
 }) => {
+  const navigate = useNavigate();
   const handleLike = () => onLike?.(id);
+  const time = timeAgo(timestamp)
 
   return (
     <article className={`bg-gray-900 w-full max-w-md mx-auto rounded-xl shadow-lg border border-gray-800 mb-4 sm:mb-6 overflow-hidden ${className}`}>
       {/* Post Header */}
       <header className="flex items-center p-4">
-        <Avatar 
-          src={user.avatar} 
-          alt={`${user.username}'s avatar`} 
-          size="md"
+        <Avatar
+          src={user.avatar}
+          alt={`${user.username}'s avatar`}
+          isLoading={isLoading}
           className="cursor-pointer border-gray-700"
         />
         <div className="ml-3 flex-1">
           <div className="flex items-center">
-            <button 
+            <button
               className="font-semibold text-white hover:underline focus:outline-none"
               aria-label={`View ${user.username}'s profile`}
+              onClick={() => {
+                navigate(`/profile/${user.id}`);
+              }}
             >
               {user.username}
             </button>
-            {user.isVerified && (
-              <svg 
-                className="w-4 h-4 ml-1 text-blue-400" 
-                fill="currentColor" 
-                viewBox="0 0 20 20"
-                aria-label="Verified account"
-              >
-                <path 
-                  fillRule="evenodd" 
-                  d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" 
-                  clipRule="evenodd" 
-                />
-              </svg>
-            )}
-            
+           
+
           </div>
+          <p>{time}</p>
         </div>
-        <button 
+
+        <button
           className="p-1 hover:bg-gray-800 rounded-full focus:outline-none transition-colors"
           aria-label="More options"
         >
@@ -83,6 +78,7 @@ export const PostCard: React.FC<PostCardProps> = ({
             <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
           </svg>
         </button>
+        
       </header>
 
       {/* Post Media */}
@@ -105,7 +101,7 @@ export const PostCard: React.FC<PostCardProps> = ({
         </div>
       )}
 
-      {/* Caption */}   
+      {/* Caption */}
       <Caption username={user.username} caption={caption} />
 
 

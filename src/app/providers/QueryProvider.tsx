@@ -1,5 +1,5 @@
 import { QueryClientProvider } from '@tanstack/react-query';
-// import { ReactQu eryDevtools } from '@tanstack/react-query-devtools';
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { queryClient } from '@/services/queryClient';
 
 interface QueryProviderProps {

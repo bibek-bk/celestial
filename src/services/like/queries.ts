@@ -15,12 +15,4 @@ export const useHasUserLikedPost = (postId: string) => {
   });
 };
 
-export const useLikesCount = (postId: string) => {
-  return useQuery({
-    queryKey: likeKeys.count(postId),
-    queryFn: async () => likeApi.getLikeCount(postId),
-    enabled: !!postId,
-  });
-};
-
 
