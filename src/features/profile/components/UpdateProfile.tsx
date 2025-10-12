@@ -13,7 +13,7 @@ interface UpdateProfileProps {
 }
 
 const UpdateProfile: React.FC<UpdateProfileProps> = ({ onClose }) => {    const { userId } = useAuth();
-    const { data: profile, isLoading: profileLoading } = useProfileQuery(userId);
+    const { data: profile, isLoading: profileLoading } = useProfileQuery(userId || '');
     const { mutate: updateProfile, isPending } = useUpdateProfile();
     const [formData, setFormData] = useState({
         username: profile?.username || '',
@@ -21,7 +21,7 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({ onClose }) => {    const 
         avatar_url: profile?.avatar_url || ''
     });
     const [previewUrl, setPreviewUrl] = useState(profile?.avatar_url || '');
-    const [avatarFile, setAvatarFile] = useState(null);
+    const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
     // Update form when profile loads
     React.useEffect(() => {
@@ -67,7 +67,7 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({ onClose }) => {    const 
 
         // Upload avatar if new file selected
         if (avatarFile) {
-            avatarUrl = await uploadAvatar(avatarFile, userId)
+            avatarUrl = await uploadAvatar(avatarFile, userId || '')
 
         }
 

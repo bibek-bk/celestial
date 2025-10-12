@@ -16,5 +16,6 @@ export const useGetUserPosts = (userId: string) => {
   return useQuery({
     queryKey: ['userPosts', userId],
     queryFn: () => fetchUserPosts(userId),
+    enabled: !!userId,
   });
 };

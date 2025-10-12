@@ -8,7 +8,7 @@ type PostCacheShape = {
   id: string;
   likes: number; // existing field name in PostCard props
   isLiked: boolean; // existing field name in PostCard props
-  user?: unknown;
+  user?: { username: string; avatar: string };
 };
 
 export const useLikePost = () => {

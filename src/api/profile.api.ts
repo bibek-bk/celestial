@@ -66,5 +66,6 @@ export const fetchUserPosts = async (userId: string) => {
     .eq('user_id', userId)
     .order('created_at', { ascending: false });
 
-  return { data, error };
+  if (error) throw error;
+  return data;
 };
