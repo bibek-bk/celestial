@@ -9,6 +9,7 @@ import { useAuth } from '@/shared/hooks/useAuth';
 import UpdateProfile from './UpdateProfile';
 import { useGetUserPosts, useProfileQuery } from '@/services/profiles/queries';
 import PostsGrid from './PostsGrid';
+import SettingModal from './SettingModal';
 
 interface User {
   avatar_url: string;
@@ -42,7 +43,9 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
   const { id: profileId } = useParams<{ id: string }>();
   const { userId } = useAuth();
   const { data: profile, isLoading } = useProfileQuery(profileId ?? userId ?? '');
+  const [isSettingModalOpen, setIsSettingModalOpen] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false)
+
   const { data: userPosts, isLoading: isGetUserPostLoading } = useGetUserPosts(profileId ?? userId ?? '')
 
 
@@ -63,17 +66,19 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
       <div className="max-w-full sm:max-w-[680px] mx-auto">
         {/* Profile Header - starts 20px from top on mobile, 32px on tablet/desktop */}
         {showEditModal && <UpdateProfile onClose={() => setShowEditModal(false)} />}
+          {isSettingModalOpen && <SettingModal onClose={()=> setIsSettingModalOpen(false)}/>}
         <div className="pt-5 sm:pt-8">
           <ProfileHeader
             avatarSrc={profile?.avatar_url || user.avatar_url}
             avatarAlt={user.avatarAlt}
-            posts={profile?.posts_count || 0 }
+            posts={profile?.posts_count || 0}
             followers={profile?.followers_count || 0}
             following={profile?.following_count || 0}
             onEditProfile={handleEditProfile}
             isOwnProfile={isOwnProfile}
             isLoading={isLoading}
             userId={profileId}
+            onClick={() => setIsSettingModalOpen(true)}
           />
         </div>
 

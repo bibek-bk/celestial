@@ -19,7 +19,7 @@ const PostsGrid: React.FC<PostsGridProps> = ({ posts, isLoading, className = '' 
   if (isLoading) {
     return (
       <div className={`px-4 sm:px-6 ${className}`}>
-        <div className="grid grid-cols-3 gap-1 sm:gap-2 md:gap-3">
+        <div className="grid grid-cols-3 gap-1 sm:gap-2 md:gap-3 py-4">
           {[...Array(9)].map((_, i) => (
             <Skeleton 
               key={i}
