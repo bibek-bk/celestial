@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { likeApi } from '@/api/like.api';
 import { postKeys } from '@/services/posts/keys';
 import { likeKeys } from './keys';
+import { useToast } from '@/shared/components/ui/useToast';
 
 type PostCacheShape = {
   id: string;
@@ -12,6 +13,7 @@ type PostCacheShape = {
 
 export const useLikePost = () => {
   const queryClient = useQueryClient();
+  const { success, error } = useToast();
 
   return useMutation({
     mutationFn: async ({ postId, userId }: { postId: string; userId: string }) => {
@@ -49,6 +51,7 @@ export const useLikePost = () => {
       return { listPrev, detailPrev };
     },
     onError: (_err, { postId }, ctx) => {
+      error('Failed to like post', 'Something went wrong. Please try again.');
       // rollback
       ctx?.listPrev?.forEach(([key, old]) => {
         if (old) queryClient.setQueryData(key, old);
@@ -58,6 +61,9 @@ export const useLikePost = () => {
       }
       queryClient.setQueryData(likeKeys.hasLiked(postId), false);
       queryClient.setQueryData(likeKeys.count(postId), (prev: number | undefined) => prev);
+    },
+    onSuccess: () => {
+      success('Post liked', 'You liked this post.');
     },
     onSettled: (_data, _error, { postId }) => {
       // Optionally invalidate for consistency
@@ -71,6 +77,7 @@ export const useLikePost = () => {
 
 export const useUnlikePost = () => {
   const queryClient = useQueryClient();
+  const { success, error } = useToast();
 
   return useMutation({
     mutationFn: async ({ postId, userId }: { postId: string; userId: string }) => {
@@ -104,6 +111,7 @@ export const useUnlikePost = () => {
       return { listPrev, detailPrev };
     },
     onError: (_err, { postId }, ctx) => {
+      error('Failed to unlike post', 'Something went wrong. Please try again.');
       ctx?.listPrev?.forEach(([key, old]) => {
         if (old) queryClient.setQueryData(key, old);
       });
@@ -112,6 +120,9 @@ export const useUnlikePost = () => {
       }
       queryClient.setQueryData(likeKeys.hasLiked(postId), true);
       queryClient.setQueryData(likeKeys.count(postId), (prev: number | undefined) => prev);
+    },
+    onSuccess: () => {
+      success('Post unliked', 'You removed your like.');
     },
     onSettled: (_data, _error, { postId }) => {
       queryClient.invalidateQueries({ queryKey: postKeys.detail(postId) });
