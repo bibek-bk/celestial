@@ -5,11 +5,14 @@ import { postKeys } from './keys';
 import { useToast } from '@/shared/components/ui/useToast';
 
 export const useUploadImage = () => {
-  const { error } = useToast();
+  const { success, error } = useToast();
   
   return useMutation({
     mutationFn: ({ file, userId }: { file: File; userId: string }) =>
       postsApi.uploadImage(file, userId),
+    onSuccess: () => {
+      success('Image uploaded', 'Your image is ready to be posted.');
+    },
     onError: (err) => {
       error('Failed to upload image', err instanceof Error ? err.message : 'Please try again with a different image.');
     },
@@ -34,8 +37,15 @@ export const useCreatePost = () => {
 };
 
 export const useDeleteImage = () => {
+  const { success, error } = useToast();
   return useMutation({
     mutationFn: (imageUrl: string) => postsApi.deleteImage(imageUrl),
+    onSuccess: () => {
+      success('Image deleted', 'The image has been removed.');
+    },
+    onError: (err) => {
+      error('Failed to delete image', err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+    },
   });
 };
 

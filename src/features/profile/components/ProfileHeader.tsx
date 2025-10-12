@@ -3,6 +3,7 @@ import { Avatar } from '@/design-system/components/Avatar/Avatar';
 import { Button } from '@/design-system/components/Button/Button';
 import Metrics from './Metrics';
 import { FollowButton } from '@/features/follow/FollowButton';
+import { Settings } from 'lucide-react';
 
 interface ProfileHeaderProps {
   userId: string;
@@ -12,10 +13,10 @@ interface ProfileHeaderProps {
   followers?: number;
   following?: number;
   onEditProfile?: () => void;
- 
   isOwnProfile?: boolean;
   className?: string;
   isLoading: boolean;
+  onClick: () => void;
 }
 
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({
@@ -28,6 +29,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   onEditProfile,
   isLoading,
   isOwnProfile = false,
+  onClick,
   className = '',
 }) => {
 
@@ -86,6 +88,13 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           />
         )}
       </div>
+      <button
+        onClick={onClick}
+        className="lg:hidden p-2 hover:bg-gray-800 rounded-full transition-colors"
+        aria-label="Settings"
+      >
+        <Settings className="w-5 h-5 text-gray-400 hover:text-gray-200" />
+      </button>
     </div>
   );
 };
