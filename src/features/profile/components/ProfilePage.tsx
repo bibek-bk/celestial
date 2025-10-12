@@ -77,7 +77,7 @@ console.log(profile)
             onEditProfile={handleEditProfile}
             isOwnProfile={isOwnProfile}
             isLoading={isLoading}
-            userId={profileId}
+            userId={profileId || ''}
             onClick={() => setIsSettingModalOpen(true)}
           />
         </div>
@@ -108,7 +108,7 @@ console.log(profile)
         {/* Content based on active tab */}
         {activeTab === 'posts' ?
           <PostsGrid
-            posts={userPosts?.data}
+            posts={userPosts || null}
             isLoading={isGetUserPostLoading}
           /> : <ReelsPlaceholder />}
       </div>

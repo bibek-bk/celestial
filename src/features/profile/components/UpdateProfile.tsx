@@ -16,11 +16,11 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({ onClose }) => {    const 
     const { data: profile, isLoading: profileLoading } = useProfileQuery(userId || '');
     const { mutate: updateProfile, isPending } = useUpdateProfile();
     const [formData, setFormData] = useState({
-        username: profile?.username || '',
-        bio: profile?.bio || '',
-        avatar_url: profile?.avatar_url || ''
+        username: '',
+        bio: '',
+        avatar_url: ''
     });
-    const [previewUrl, setPreviewUrl] = useState(profile?.avatar_url || '');
+    const [previewUrl, setPreviewUrl] = useState('');
     const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
     // Update form when profile loads
