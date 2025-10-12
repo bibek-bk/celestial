@@ -48,7 +48,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
 
   const { data: userPosts, isLoading: isGetUserPostLoading } = useGetUserPosts(profileId ?? userId ?? '')
 
-
+console.log(profile)
   const isOwnProfile = profileId === userId;
 
 
