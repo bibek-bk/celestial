@@ -16,9 +16,9 @@ export const useUpdateProfile = () => {
         onMutate: async (newData) => {
             queryClient.cancelQueries({ queryKey: profileKeys.all })
 
-            const previousProfile = queryClient.getQueryData(profileKeys.detail(userId))
+            const previousProfile = queryClient.getQueryData(profileKeys.detail(userId || ''))
 
-            queryClient.setQueryData(profileKeys.detail(userId),
+            queryClient.setQueryData(profileKeys.detail(userId || ''),
                 (old: User) => ({ ...old, ...newData })
             )
             return { previousProfile }
@@ -27,7 +27,7 @@ export const useUpdateProfile = () => {
             success('Profile updated successfully!', 'Your changes have been saved.');
         },
         onError: (err, newData, Context) => {
-            queryClient.setQueryData(profileKeys.detail(userId), Context?.previousProfile)
+            queryClient.setQueryData(profileKeys.detail(userId || ''), Context?.previousProfile)
             error('Failed to update profile', err instanceof Error ? err.message : 'Something went wrong. Please try again.');
         },
         onSettled: () => {

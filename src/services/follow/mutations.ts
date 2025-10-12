@@ -59,9 +59,7 @@ export const useFollowUserMutation = () => {
 
             success(
                 'Successfully followed!',
-                profile?.username
-                    ? `You are now following ${profile.username}`
-                    : 'You are now following this user'
+                profile?.username || 'this user'
             )
         },
 
@@ -69,7 +67,7 @@ export const useFollowUserMutation = () => {
             // Sync with server by invalidating related queries
             queryClient.invalidateQueries({ queryKey: ['is-following', userId] })
             queryClient.invalidateQueries({ queryKey: profileKeys.detail(userId) })
-            queryClient.invalidateQueries({ queryKey: profileKeys.detail(currentUserId) })
+            queryClient.invalidateQueries({ queryKey: profileKeys.detail(currentUserId || '') })
         }
     })
 }
@@ -124,9 +122,7 @@ export const useUnFollowUserMutation = () => {
 
             success(
                 'Successfully unfollowed!',
-                profile?.username
-                    ? `You are no longer following ${profile.username}`
-                    : 'You are no longer following this user'
+                profile?.username || 'this user'
             )
         },
 
@@ -134,7 +130,7 @@ export const useUnFollowUserMutation = () => {
             // Sync with server by invalidating related queries
             queryClient.invalidateQueries({ queryKey: ['is-following', userId] })
             queryClient.invalidateQueries({ queryKey: profileKeys.detail(userId) })
-            queryClient.invalidateQueries({ queryKey: profileKeys.detail(currentUserId) })
+            queryClient.invalidateQueries({ queryKey: profileKeys.detail(currentUserId || '') })
         }
     })
 }
