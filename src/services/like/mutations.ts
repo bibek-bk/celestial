@@ -13,7 +13,7 @@ type PostCacheShape = {
 
 export const useLikePost = () => {
   const queryClient = useQueryClient();
-  const { success, error } = useToast();
+  const {  error } = useToast();
 
   return useMutation({
     mutationFn: async ({ postId, userId }: { postId: string; userId: string }) => {
@@ -58,9 +58,6 @@ export const useLikePost = () => {
         queryClient.setQueryData(postKeys.detail(postId), ctx.detailPrev);
       }
       queryClient.setQueryData(likeKeys.hasLiked(postId), false);
-    },
-    onSuccess: () => {
-      success('Post liked', 'You liked this post.');
     },
     onSettled: (_data, _error, { postId }) => {
       // Optionally invalidate for consistency
@@ -114,9 +111,6 @@ export const useUnlikePost = () => {
         queryClient.setQueryData(postKeys.detail(postId), ctx.detailPrev);
       }
       queryClient.setQueryData(likeKeys.hasLiked(postId), true);
-    },
-    onSuccess: () => {
-      success('Post unliked', 'You removed your like.');
     },
     onSettled: (_data, _error, { postId }) => {
       queryClient.invalidateQueries({ queryKey: postKeys.detail(postId) });
