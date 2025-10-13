@@ -13,8 +13,9 @@ export interface DbPostRow {
   image_url: string;
   created_at: string;
   updated_at: string;
-  like_count:number;
-  profiles?: {  // Add this
+  like_count: number;
+  isLiked?: boolean;  // Added for client-side like status
+  profiles?: {
     id: string;
     username: string;
     avatar_url: string | null;
@@ -69,9 +70,7 @@ export const postsApi = {
       if (error) throw error;
     }
   },
-  async getAllPosts(): Promise<DbPostRow[]> {
-    console.log('from getAllPosts');
-
+  async getAllPosts(userId?: string): Promise<DbPostRow[]> {
     const { data, error } = await supabase
       .from('posts')
       .select(`
@@ -83,9 +82,40 @@ export const postsApi = {
         )
       `)
       .order('created_at', { ascending: false });
-    console.log(data)
+    
     if (error) throw error;
-    return data as DbPostRow[];
+    if (!data) return [];
+    
+    console.log('Raw posts data:', data);
+    
+    // If no userId, return posts without like status
+    if (!userId) {
+      return data.map(post => ({ ...post, isLiked: false })) as DbPostRow[];
+    }
+    
+    // Fetch all likes for the current user in one query
+    const postIds = data.map(post => post.id);
+    const { data: userLikes, error: likesError } = await supabase
+      .from('post_likes')
+      .select('post_id')
+      .eq('user_id', userId)
+      .in('post_id', postIds);
+    
+    if (likesError) {
+      console.error('Error fetching user likes:', likesError);
+      return data.map(post => ({ ...post, isLiked: false })) as DbPostRow[];
+    }
+    
+    // Create a Set of liked post IDs for O(1) lookup
+    const likedPostIds = new Set(userLikes?.map(like => like.post_id) || []);
+    
+    console.log('User liked posts:', Array.from(likedPostIds));
+    
+    // Map posts with like status
+    return data.map((post: any) => ({
+      ...post,
+      isLiked: likedPostIds.has(post.id)
+    })) as DbPostRow[];
   },
 };
 

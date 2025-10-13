@@ -4,7 +4,7 @@ import { useHasUserLikedPost } from '@/services/like/queries';
 
 interface ActionBarProps {
   postId: string;
-  likes: number;
+  
   isLiked?: boolean;
   onLike?: () => void;
   className?: string;
@@ -12,7 +12,7 @@ interface ActionBarProps {
 
 export const ActionBar: React.FC<ActionBarProps> = ({
   postId,
-  likes,
+  
   isLiked,
   className = ''
 }) => {
@@ -26,7 +26,7 @@ export const ActionBar: React.FC<ActionBarProps> = ({
     <div className={`flex items-center justify-between py-3 px-4 border-t border-gray-800 ${className}`}>
       <div className="flex items-center gap-6">
         {/* Like Button (service-backed) */}
-        <LikeButton postId={postId} isLiked={effectiveIsLiked} likes={likes} />
+        <LikeButton postId={postId} isLiked={effectiveIsLiked}  />
 
 
         {/* Share Button */}

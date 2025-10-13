@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/shared/hooks/useAuth';
 import { signOut } from '@/services/auth';
 import { CreatePostModal } from '@/features/create-post';
-import { useToast } from '@/shared/components/ui/useToast';
+import { useToast } from '@/shared/hooks/useToast';
 
 export function Sidebar() {
   const navigate = useNavigate();
@@ -56,7 +56,7 @@ export function Sidebar() {
       {/* App Name */}
       <div className="mb-8">
         <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-          celestial
+          stelllar
         </h1>
       </div>
 

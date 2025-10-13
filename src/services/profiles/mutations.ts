@@ -3,7 +3,7 @@ import { UpdateUserInput, User } from "@/entities/user/types"
 import { useMutation, useQueryClient, } from "@tanstack/react-query"
 import { profileKeys } from "./keys"
 import { useAuth } from "@/shared/hooks/useAuth"
-import { useToast } from '@/shared/components/ui/useToast'
+import { useToast } from '@/shared/hooks/useToast'
 
 
 export const useUpdateProfile = () => {

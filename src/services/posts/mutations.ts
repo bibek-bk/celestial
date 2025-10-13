@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postsApi, type CreatePostPayload } from '@/api/posts.api';
 import { supabase } from '@/lib/supabaseClient';
 import { postKeys } from './keys';
-import { useToast } from '@/shared/components/ui/useToast';
+import { useToast } from '@/shared/hooks/useToast';
 
 export const useUploadImage = () => {
   const { success, error } = useToast();

@@ -2,16 +2,19 @@ import { supabase } from "@/lib/supabaseClient"
 
 export const likeApi = {
     async insertLike(postId: string, userId: string): Promise<void> {
-        await supabase.from('post_likes')
-            .insert([{ post_id: postId, user_id: userId }])
+        console.log(postId,userId,'from api ');
+        
+        const { error } = await supabase.from('post_likes')
+            .insert([{ post_id: postId, user_id: userId }]);
+        if (error) throw error;
     },
 
     async deleteLike(postId: string, userId: string): Promise<void> {
-        await supabase.from('post_likes')
+        const { error } = await supabase.from('post_likes')
             .delete()
             .eq('post_id', postId)
             .eq('user_id', userId);
-
+        if (error) throw error;
     },
     async getLikeCount(postId: string): Promise<number> {
         const { count, error } = await supabase.from('post_likes')

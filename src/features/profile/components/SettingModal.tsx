@@ -1,5 +1,5 @@
 import { signOut } from '@/services/auth';
-import { useToast } from '@/shared/components/ui/useToast';
+import { useToast } from '@/shared/hooks/useToast';
 import { LogOut } from 'lucide-react';
 import React, { useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
