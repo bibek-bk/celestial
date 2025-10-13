@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { profileKeys } from "../profiles/keys"
 import { User } from "@/entities/user/types"
 import { useAuth } from "@/shared/hooks/useAuth"
-import { useToast } from '@/shared/components/ui/useToast'
+import { useToast } from '@/shared/hooks/useToast'
 
 
 export const useFollowUserMutation = () => {
