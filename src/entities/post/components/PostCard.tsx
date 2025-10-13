@@ -87,7 +87,7 @@ export const PostCard: React.FC<PostCardProps> = ({
       {/* Action Bar */}
       <ActionBar
         postId={id}
-        likes={likes ?? 0}
+        
         isLiked={isLiked}
         onLike={handleLike}
       />

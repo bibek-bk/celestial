@@ -5,11 +5,10 @@ import { useToggleLike } from '../hooks/useToggleLike';
 interface LikeButtonProps {
   postId: string;
   isLiked: boolean;
-  likes: number;
   className?: string;
 }
 
-export const LikeButton: React.FC<LikeButtonProps> = ({ postId, isLiked, likes, className = '' }) => {
+export const LikeButton: React.FC<LikeButtonProps> = ({ postId, isLiked, className = '' }) => {
   const { toggle, isPending } = useToggleLike(postId, isLiked);
   const lastClickTime = useRef(0);
   const DEBOUNCE_MS = 300;
@@ -46,9 +45,7 @@ export const LikeButton: React.FC<LikeButtonProps> = ({ postId, isLiked, likes, 
           d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
         />
       </svg>
-      {likes > 0 && (
-        <span className="text-sm font-medium text-gray-300">{likes}</span>
-      )}
+
     </button>
   );
 };
