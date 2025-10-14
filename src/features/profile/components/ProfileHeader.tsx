@@ -32,6 +32,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   onClick,
   className = '',
 }) => {
+console.log(avatarSrc)
 
   return (
     <div className={`flex  items-start  sm:items-center gap-4 ${className}`}>

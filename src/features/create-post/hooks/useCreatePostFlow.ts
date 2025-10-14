@@ -60,7 +60,7 @@ export const useCreatePostFlow = () => {
 
     try {
       const user = await getCurrentUser();
-      console.log('user', user.id);
+
       setUploadProgress({ progress: 0, stage: 'uploading' });
       uploadedImageUrl = await uploadImageMutation.mutateAsync({ file: selectedImage!, userId: user.id });
       setUploadProgress({ progress: 60, stage: 'uploading' });
@@ -71,6 +71,7 @@ export const useCreatePostFlow = () => {
       setUploadProgress({ progress: 100, stage: 'complete' });
       return true;
     } catch (err) {
+      
       if (uploadedImageUrl) {
         await deleteImageMutation.mutateAsync(uploadedImageUrl);
       }
