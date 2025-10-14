@@ -1,5 +1,5 @@
 // Profile feature exports - TypeScript
-export { default as ProfilePage } from './components/ProfilePage';
+export { default as ProfilePage } from './container/ProfilePage';
 export { default as ProfileHeader } from './components/ProfileHeader';
 export { Avatar } from '@/design-system/components/Avatar/Avatar';
 export { default as Metrics } from './components/Metrics';

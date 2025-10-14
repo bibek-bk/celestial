@@ -13,8 +13,6 @@ const SettingModal: React.FC<SettingModalProps> = ({ onClose }) => {
   const { error: showError } = useToast();
   const navigate = useNavigate();
 
-
-
   const handleSignOut = useCallback(async () => {
     if (isSigningOut) return;
     try {
