@@ -54,6 +54,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
             posts={posts}
             followers={followers}
             following={following}
+            isLoading={isLoading}
           />
         </div>
 

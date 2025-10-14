@@ -10,16 +10,13 @@ export const useToggleFollow = (userId: string) => {
     const toggleFollow = async () => {
         const wasFollowing = isFollowingQuery.data as boolean;
 
-        try {
-            if (wasFollowing) {
-                await unFollowUser.mutateAsync(userId);
-            } else {
-                await followUser.mutateAsync(userId);
-            }
-        } catch (error) {
-            throw new Error(error instanceof Error ? error.message : 'An error occurred');
 
+        if (wasFollowing) {
+            unFollowUser.mutate(userId);
+        } else {
+            followUser.mutate(userId);
         }
+
     }
 
     return {

@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import ProfileHeader from './ProfileHeader';
-import Bio from './Bio';
+import ProfileHeader from '../components/ProfileHeader';
+import Bio from '../components/Bio';
 // import StoriesRow from './StoriesRow';
-import PostsReelsToggle from './PostsReelsToggle';
-import ReelsPlaceholder from './ReelsPlaceholder';
+import PostsReelsToggle from '../components/PostsReelsToggle';
+import ReelsPlaceholder from '../components/ReelsPlaceholder';
 import { useAuth } from '@/shared/hooks/useAuth';
-import UpdateProfile from './UpdateProfile';
+import UpdateProfile from '../components/UpdateProfile';
 import { useGetUserPosts, useProfileQuery } from '@/services/profiles/queries';
-import PostsGrid from './PostsGrid';
-import SettingModal from './SettingModal';
+import PostsGrid from '../components/PostsGrid';
+import SettingModal from '../components/SettingModal';
 
 interface User {
   avatar_url: string;
@@ -42,7 +42,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({
   const [activeTab, setActiveTab] = useState<'posts' | 'reels'>('posts');
   const { id: profileId } = useParams<{ id: string }>();
   const { userId } = useAuth();
-  const { data: profile, isLoading } = useProfileQuery(profileId ?? userId ?? '');
+  const { data: profile, isLoading:isProfileLoading } = useProfileQuery(profileId ?? userId ?? '');
   const [isSettingModalOpen, setIsSettingModalOpen] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false)
 
@@ -76,7 +76,7 @@ console.log(profileId,profile,'from profile page')
             following={profile?.following_count || 0}
             onEditProfile={handleEditProfile}
             isOwnProfile={isOwnProfile}
-            isLoading={isLoading}
+            isLoading={isProfileLoading}
             userId={profileId || ''}
             onClick={() => setIsSettingModalOpen(true)}
           />
@@ -87,7 +87,7 @@ console.log(profileId,profile,'from profile page')
           <Bio
             name={profile?.username || user.name}
             bio={profile?.bio || user.bio}
-            isLoading={isLoading}
+            isLoading={isProfileLoading}
           />
         </div>
 

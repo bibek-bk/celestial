@@ -1,7 +1,7 @@
 // src/app/routes/router.tsx
 import React, { Suspense, lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import { PublicLayout, AuthenticatedLayout } from '@/app/layout';
+import { PublicLayout, AuthenticatedLayout,AdaptiveLayout } from '@/app/layout';
 import { RequireAuth } from '@/shared/components/guards/RequireAuth';
 import { RedirectIfAuthenticated } from '@/shared/components/guards/RedirectIfAuthenticated';
 import { RouteErrorBoundary } from './ErrorBoundary';
@@ -50,10 +50,6 @@ export const router = createBrowserRouter([
         path: 'messages',
         element: withSuspense(MessagesComingSoon),
       },
-      {
-        path: 'profile/:id',
-        element: withSuspense(ProfilePage),
-      },
     ],
   },
 
@@ -72,8 +68,19 @@ export const router = createBrowserRouter([
           </RedirectIfAuthenticated>
         ),
       },
+    ],
+  },
+
+  // ============================================
+  // ADAPTIVE ROUTES (Accessible to both auth and unauth)
+  // Layout adapts based on authentication state
+  // ============================================
+  {
+    element: <AdaptiveLayout />,
+    errorElement: <RouteErrorBoundary />,
+    children: [
       {
-        path: '/public/profile/:id',
+        path: 'profile/:id',
         element: withSuspense(ProfilePage),
       },
     ],

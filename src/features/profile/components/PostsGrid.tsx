@@ -72,12 +72,12 @@ const PostsGrid: React.FC<PostsGridProps> = ({ posts, isLoading, className = '' 
 
   // Show posts grid
   return (
-    <div className={`px-4 sm:px-6 ${className}`}>
+    <div className={`px-4 sm:px-6  ${className}`}>
       <div className="grid grid-cols-3 gap-1 sm:gap-2 md:gap-3 py-4">
         {posts.map((post) => (
           <div 
             key={post.id}
-            className="aspect-square relative group cursor-pointer overflow-hidden rounded bg-[#1F2A36]"
+            className="aspect-square rounded-lg relative group cursor-pointer overflow-hidden  bg-[#1F2A36]"
           >
             <img 
               src={post.image_url}

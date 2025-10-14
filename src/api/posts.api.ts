@@ -26,7 +26,7 @@ export const postsApi = {
 
 
   async uploadImage(file: File, userId: string): Promise<string> {
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp','image/svg+xml'];
     //better to do validation on both client and storage RLS
     if (!allowedTypes.includes(file.type)) {
       throw new Error('Invalid file type. Only images are allowed.');

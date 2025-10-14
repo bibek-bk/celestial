@@ -42,7 +42,7 @@ export const useFollowUserMutation = () => {
         onError: (err, userId, context) => {
             error(
                 'Failed to follow user',
-                `Failed to follow ${context?.previousProfile?.username || 'user'}`
+                `${err}`
             )
             
             // Rollback on error
