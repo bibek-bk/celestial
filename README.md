@@ -1,482 +1,104 @@
 # 📸 Celestial
 
-> A production-ready social media platform built with modern React architecture, featuring optimistic UI updates, normalized caching, and scalable Feature-Sliced Design.
+> A production-ready social media platform showcasing advanced React patterns with Feature-Sliced Design, optimistic updates, and normalized caching.
 
 <div align="center">
 
-[![Live Demo](https://img.shields.io/badge/demo-live-success?style=for-the-badge&logo=vercel)](https://your-demo-link.vercel.app)
-[![GitHub](https://img.shields.io/badge/code-github-black?style=for-the-badge&logo=github)](https://github.com/yourusername/instasphere)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-18.2-61dafb?style=for-the-badge&logo=react)](https://reactjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![TanStack Query](https://img.shields.io/badge/TanStack_Query-FF4154?style=for-the-badge&logo=react-query&logoColor=white)](https://tanstack.com/query)
 
-[🚀 Live Demo](https://your-demo-link.vercel.app) • [📹 Video Walkthrough](https://your-video-link.com) • [📧 Contact](mailto:your.email@example.com)
+**[💼 My Portfolio](https://bibekbk.vercel.app)**
 
 </div>
 
 ---
 
-## 📋 Table of Contents
+## 🎯 Why This Project Stands Out
 
-- [Overview](#-overview)
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Architecture](#-architecture)
-- [Quick Start](#-quick-start)
-- [Project Structure](#-project-structure)
-- [Key Implementations](#-key-implementations)
-- [Database Schema](#-database-schema)
-- [Performance](#-performance)
-- [Roadmap](#-roadmap)
+Built to demonstrate **enterprise-level frontend architecture** with patterns you'd find in production apps at scale:
 
----
-
-## 🎯 Overview
-
-InstaSphere is a full-stack social media application demonstrating enterprise-level React patterns with **Feature-Sliced Design (FSD)**, **optimistic UI updates**, and **advanced state management**. Built to showcase production-ready code architecture and modern frontend engineering practices.
-
-### 🌟 Highlights
-
-- **🏗️ Clean Architecture** - Feature-Sliced Design with clear layer separation
-- **⚡ Optimistic UI** - Instant feedback with automatic rollback on failure
-- **🔄 Smart Caching** - 60% reduction in API calls through normalized cache management
-- **📱 Responsive** - Mobile-first design with seamless cross-device experience
-- **🔐 Secure** - OAuth 2.0 with Row Level Security (RLS)
-- **📊 Type-Safe** - 100% TypeScript coverage with strict mode
+- **🏗️ Feature-Sliced Design** - 7-layer architecture with strict import rules
+- **⚡ Optimistic UI** - Zero perceived latency with automatic rollback
+- **🔄 Smart Caching** - Query key factories and normalized cache management  
+- **🎨 Type-Safe** - 100% TypeScript with strict mode enabled
+- **📱 Production-Ready** - Error boundaries, route guards, toast system
+- **🚀 Performance Optimized** - Code splitting, image lazy loading, debounced interactions
 
 ---
 
 ## ✨ Features
 
-### Core Functionality
+| Feature | Implementation Highlights |
+|---------|--------------------------|
+| **🔐 Authentication** | OAuth 2.0 with Supabase, protected routes with guards |
+| **📝 Posts** | Image upload with preview, optimistic creation |
+| **❤️ Likes** | Instant feedback with race condition prevention |
+| **👥 Follow System** | Optimistic updates with automatic rollback |
+| **👤 Profiles** | Editable bio, avatar, username with real-time counters |
+| **📰 Feed** | Chronological posts with skeleton loading states |
 
-| Feature | Description | Status |
-|---------|-------------|--------|
-| 🔐 **Authentication** | OAuth 2.0 with Google, secure session management | ✅ Live |
-| 📝 **Create Posts** | Image upload with preview, captions, drag-and-drop | ✅ Live |
-| 📰 **Feed** | Chronological post feed with optimistic interactions | ✅ Live |
-| ❤️ **Like System** | Optimistic likes with instant UI feedback | ✅ Live |
-| 👥 **Follow System** | Follow/unfollow with real-time counter updates | ✅ Live |
-| 👤 **User Profiles** | Customizable profiles with post grids | ✅ Live |
-| ✏️ **Edit Profile** | Update bio, username, and avatar | ✅ Live |
-
-### Technical Features
-
-- ✅ Optimistic updates with automatic rollback
-- ✅ Normalized cache management with query key factories
-- ✅ Protected routes with authentication guards
-- ✅ Error boundaries with graceful fallbacks
-- ✅ Toast notifications for user feedback
-- ✅ Skeleton loading states
-- ✅ Responsive image optimization
-- ✅ Debounced user interactions
+**Technical Features:**
+- ✅ Optimistic updates with `onMutate` + `onError` rollback pattern
+- ✅ Query key factories with TypeScript const assertions
+- ✅ Three-layer architecture (API → Service → Feature)
+- ✅ Normalized cache invalidation strategy
+- ✅ Debounced interactions (300ms)
+- ✅ Code splitting with React.lazy()
 
 ---
 
 ## 🛠️ Tech Stack
 
-### Frontend
-
 ```yaml
-Core:
-  - React 18.2          # UI library with concurrent features
-  - TypeScript 5.0      # Static type checking
-  - Vite               # Build tool & dev server
+Frontend:
+  React 18.3             # Concurrent features
+  TypeScript 5.0          # Strict mode enabled
+  TanStack Query v5       # Server state + optimistic updates
+  Tailwind CSS 4.1        # Utility-first styling
+  React Router v6         # Client-side routing
 
-State Management:
-  - TanStack Query v5   # Server state & caching
-  - Redux Toolkit       # Client state management
-
-Styling:
-  - Tailwind CSS 3.0    # Utility-first CSS framework
-  - Custom Design System # Reusable UI components
-
-Routing:
-  - React Router v6     # Client-side routing with lazy loading
-```
-
-### Backend & Infrastructure
-
-```yaml
 Backend:
-  - Supabase           # Backend as a Service
-    - PostgreSQL       # Relational database
-    - Authentication   # OAuth 2.0 with Google
-    - Storage          # CDN-backed file storage
-    - Row Level Security # Database security policies
+  Supabase               
+    - PostgreSQL          # Relational database
+    - Authentication      # OAuth 2.0
+    - Storage             # CDN-backed file storage
+    - Row Level Security  # Database-level security
 
-Development:
-  - ESLint             # Code linting
-  - Prettier           # Code formatting
-  - Git & GitHub       # Version control
+Build & Dev:
+  Vite                    # Lightning-fast HMR
+  ESLint + Prettier       # Code quality
 ```
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ Architecture Deep Dive
 
-### Feature-Sliced Design (FSD)
-
-This project follows **Feature-Sliced Design** methodology for maximum scalability and maintainability.
+### Feature-Sliced Design Implementation
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                         APP LAYER                            │
-│  Providers • Routes • Store • Layouts                       │
-└─────────────────────────────────────────────────────────────┘
-                              ↓
-┌─────────────────────────────────────────────────────────────┐
-│                        PAGES LAYER                           │
-│  Route Pages (Thin wrappers)                                │
-└─────────────────────────────────────────────────────────────┘
-                              ↓
-┌─────────────────────────────────────────────────────────────┐
-│                       WIDGETS LAYER                          │
-│  Composite Features (Feed, ProfileWidget)                   │
-└─────────────────────────────────────────────────────────────┘
-                              ↓
-┌─────────────────────────────────────────────────────────────┐
-│                      FEATURES LAYER                          │
-│  Business Logic (auth, create-post, like, follow)          │
-└─────────────────────────────────────────────────────────────┘
-                              ↓
-┌─────────────────────────────────────────────────────────────┐
-│                      ENTITIES LAYER                          │
-│  Domain Models (Post, User, Follow)                         │
-└─────────────────────────────────────────────────────────────┘
-                              ↓
-┌─────────────────────────────────────────────────────────────┐
-│                       SHARED LAYER                           │
-│  Reusable Components • Hooks • Utils                        │
-└─────────────────────────────────────────────────────────────┘
-                              ↓
-┌─────────────────────────────────────────────────────────────┐
-│                  SERVICES & API LAYERS                       │
-│  TanStack Query Composition • Supabase API Calls            │
-└─────────────────────────────────────────────────────────────┘
+app/        → Providers, routing, global state
+pages/      → Route components (thin wrappers)
+widgets/    → Composite UI blocks (Feed, ProfileWidget)
+features/   → Business logic (auth, create-post, like, follow)
+entities/   → Domain models (Post, User, Follow)
+shared/     → Reusable components, hooks, utils
+services/   → React Query composition layer
+api/        → Pure Supabase API calls
 ```
 
-### Layer Responsibilities
+**Key Rules Enforced:**
+- ❌ Entities cannot import from Features
+- ❌ Services cannot import from Features
+- ✅ Strict unidirectional data flow
+- ✅ Each layer has single responsibility
 
-| Layer | Purpose | Example |
-|-------|---------|---------|
-| **App** | Application initialization | Providers, routing, global store |
-| **Pages** | Route endpoints | `/feed`, `/profile/:id` |
-| **Widgets** | Composite UI blocks | Feed widget with post list |
-| **Features** | Business features | Create post flow, like/follow logic |
-| **Entities** | Business entities | Post model, User model, PostCard component |
-| **Shared** | Reusable code | Button, Avatar, useAuth hook |
-| **Services** | Data layer | React Query hooks, mutations |
-| **API** | Backend calls | Supabase client functions |
+### Query Key Factory Pattern
 
----
-
-## 🚀 Quick Start
-
-### Prerequisites
-
-- **Node.js** 18+ and npm/yarn
-- **Supabase Account** ([Sign up free](https://supabase.com))
-
-### Installation
-
-```bash
-# 1. Clone the repository
-git clone https://github.com/yourusername/instasphere.git
-cd instasphere
-
-# 2. Install dependencies
-npm install
-
-# 3. Set up environment variables
-cp .env.example .env
-# Edit .env with your Supabase credentials
-
-# 4. Run development server
-npm run dev
-```
-
-Visit [http://localhost:5173](http://localhost:5173)
-
-### Environment Variables
-
-Create a `.env` file in the root directory:
-
-```env
-VITE_SUPABASE_URL=your_supabase_project_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-```
-
-### Database Setup
-
-Run this SQL in your Supabase SQL Editor:
-
-<details>
-<summary>Click to expand SQL schema</summary>
-
-```sql
--- Enable UUID extension
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
--- Create profiles table
-CREATE TABLE profiles (
-  id UUID REFERENCES auth.users ON DELETE CASCADE PRIMARY KEY,
-  username TEXT UNIQUE NOT NULL,
-  full_name TEXT,
-  avatar_url TEXT,
-  bio TEXT,
-  followers_count INTEGER DEFAULT 0,
-  following_count INTEGER DEFAULT 0,
-  posts_count INTEGER DEFAULT 0,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-
--- Create posts table
-CREATE TABLE posts (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  user_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
-  caption TEXT,
-  image_url TEXT NOT NULL,
-  like_count INTEGER DEFAULT 0,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-
--- Create follows table
-CREATE TABLE follows (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  follower_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
-  following_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  UNIQUE(follower_id, following_id)
-);
-
--- Create post_likes table
-CREATE TABLE post_likes (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  post_id UUID REFERENCES posts(id) ON DELETE CASCADE,
-  user_id UUID REFERENCES profiles(id) ON DELETE CASCADE,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  UNIQUE(post_id, user_id)
-);
-
--- Enable Row Level Security
-ALTER TABLE profiles ENABLE ROW LEVEL SECURITY;
-ALTER TABLE posts ENABLE ROW LEVEL SECURITY;
-ALTER TABLE follows ENABLE ROW LEVEL SECURITY;
-ALTER TABLE post_likes ENABLE ROW LEVEL SECURITY;
-
--- Create RLS Policies
-CREATE POLICY "Public profiles are viewable by everyone" 
-  ON profiles FOR SELECT USING (true);
-
-CREATE POLICY "Users can update own profile" 
-  ON profiles FOR UPDATE USING (auth.uid() = id);
-
-CREATE POLICY "Posts are viewable by everyone" 
-  ON posts FOR SELECT USING (true);
-
-CREATE POLICY "Users can create own posts" 
-  ON posts FOR INSERT WITH CHECK (auth.uid() = user_id);
-
-CREATE POLICY "Users can delete own posts" 
-  ON posts FOR DELETE USING (auth.uid() = user_id);
-
--- Create storage buckets
-INSERT INTO storage.buckets (id, name, public) 
-VALUES ('post-images', 'post-images', true);
-
-INSERT INTO storage.buckets (id, name, public) 
-VALUES ('avatars', 'avatars', true);
-
--- Storage policies
-CREATE POLICY "Anyone can view images"
-  ON storage.objects FOR SELECT USING (bucket_id IN ('post-images', 'avatars'));
-
-CREATE POLICY "Users can upload their own images"
-  ON storage.objects FOR INSERT 
-  WITH CHECK (bucket_id IN ('post-images', 'avatars') AND auth.uid()::text = (storage.foldername(name))[1]);
-```
-
-</details>
-
----
-
-## 📁 Project Structure
-
-```
-instasphere/
-├── src/
-│   ├── app/                          # Application layer
-│   │   ├── providers/               # Context providers
-│   │   │   ├── AuthProvider.tsx    # Auth state management
-│   │   │   ├── QueryProvider.tsx   # TanStack Query setup
-│   │   │   └── ReduxProvider.tsx   # Redux store provider
-│   │   ├── routes/                  # Routing configuration
-│   │   │   ├── router.tsx          # Route definitions
-│   │   │   └── ErrorBoundary.tsx   # Global error handling
-│   │   ├── store/                   # Redux store
-│   │   │   └── slices/
-│   │   │       └── authSlice.ts    # Auth state slice
-│   │   └── layout/                  # Layout components
-│   │       ├── AuthenticatedLayout.tsx
-│   │       └── PublicLayout.tsx
-│   │
-│   ├── pages/                        # Page components (route wrappers)
-│   │   ├── FeedPage.tsx
-│   │   ├── ProfilePage.tsx
-│   │   ├── AuthPage.tsx
-│   │   ├── SearchComingSoon.tsx
-│   │   └── MessagesComingSoon.tsx
-│   │
-│   ├── widgets/                      # Composite features
-│   │   └── feed/
-│   │       └── Feed.tsx             # Feed widget with post list
-│   │
-│   ├── features/                     # Business features
-│   │   ├── auth/
-│   │   │   └── AuthForm.tsx         # Supabase Auth UI integration
-│   │   ├── create-post/
-│   │   │   ├── components/
-│   │   │   │   └── CreatePostModal.tsx
-│   │   │   └── hooks/
-│   │   │       └── useCreatePostFlow.ts
-│   │   ├── like-post/
-│   │   │   ├── components/
-│   │   │   │   └── LikeButton.tsx
-│   │   │   └── hooks/
-│   │   │       └── useToggleLike.ts
-│   │   ├── follow/
-│   │   │   ├── FollowButton.tsx
-│   │   │   └── hooks/
-│   │   │       └── useToggleFollow.ts
-│   │   └── profile/
-│   │       └── components/
-│   │           ├── ProfileHeader.tsx
-│   │           ├── Bio.tsx
-│   │           ├── Metrics.tsx
-│   │           ├── PostsGrid.tsx
-│   │           └── UpdateProfile.tsx
-│   │
-│   ├── entities/                     # Domain entities
-│   │   ├── post/
-│   │   │   ├── components/
-│   │   │   │   ├── PostCard.tsx     # Main post component
-│   │   │   │   ├── PostMedia.tsx    # Image/video display
-│   │   │   │   ├── ActionBar.tsx    # Like/comment/share
-│   │   │   │   ├── Caption.tsx      # Post caption
-│   │   │   │   └── SkeletonPost.tsx # Loading skeleton
-│   │   │   └── models/
-│   │   │       └── types.ts         # Post domain types
-│   │   ├── user/
-│   │   │   └── types.ts             # User domain types
-│   │   └── follow/
-│   │       └── types.ts             # Follow domain types
-│   │
-│   ├── shared/                       # Shared resources
-│   │   ├── components/
-│   │   │   ├── ui/                  # UI components
-│   │   │   │   ├── Sidebar.tsx
-│   │   │   │   ├── NavBar.tsx
-│   │   │   │   ├── ToastProvider.tsx
-│   │   │   │   └── RouteLoader.tsx
-│   │   │   └── guards/              # Route guards
-│   │   │       ├── RequireAuth.tsx
-│   │   │       └── RedirectIfAuthenticated.tsx
-│   │   ├── hooks/
-│   │   │   └── useAuth.ts           # Auth hook
-│   │   ├── utils/
-│   │   │   └── timeAgo.ts           # Date formatting
-│   │   └── constants/
-│   │       └── routes.ts            # Route constants
-│   │
-│   ├── services/                     # Data layer (React Query)
-│   │   ├── posts/
-│   │   │   ├── queries.ts           # Post queries
-│   │   │   ├── mutations.ts         # Post mutations
-│   │   │   └── keys.ts              # Query key factory
-│   │   ├── profiles/
-│   │   │   ├── queries.ts
-│   │   │   ├── mutations.ts
-│   │   │   └── keys.ts
-│   │   ├── like/
-│   │   │   ├── queries.ts
-│   │   │   ├── mutations.ts
-│   │   │   └── keys.ts
-│   │   ├── follow/
-│   │   │   ├── queries.ts
-│   │   │   ├── mutations.ts
-│   │   │   └── keys.ts
-│   │   └── queryClient.ts           # Query client config
-│   │
-│   ├── api/                          # API layer (Supabase calls)
-│   │   ├── posts.api.ts             # Posts API
-│   │   ├── profile.api.ts           # Profile API
-│   │   ├── like.api.ts              # Like API
-│   │   └── follow.api.ts            # Follow API
-│   │
-│   ├── design-system/                # Design system (basic)
-│   │   └── components/
-│   │       ├── Avatar/
-│   │       ├── Button/
-│   │       └── Skeleton/
-│   │
-│   ├── lib/
-│   │   └── supabaseClient.ts        # Supabase client
-│   │
-│   └── main.tsx                      # App entry point
-│
-├── public/                           # Static assets
-├── .env.example                      # Environment template
-├── package.json
-├── tsconfig.json
-├── tailwind.config.js
-├── vite.config.ts
-└── README.md
-```
-
----
-
-## 🎯 Key Implementations
-
-### 1. Optimistic UI Updates
-
-All mutations implement optimistic updates with automatic rollback:
+Centralized cache management prevents invalidation bugs:
 
 ```typescript
-// Example: useFollowUserMutation
-onMutate: async (userId: string) => {
-  // Cancel queries to prevent race conditions
-  await queryClient.cancelQueries({ queryKey: ['is-following', userId] })
-  
-  // Snapshot previous state for rollback
-  const previousFollowStatus = queryClient.getQueryData(['is-following', userId])
-  
-  // Optimistic update
-  queryClient.setQueryData(['is-following', userId], true)
-  
-  return { previousFollowStatus }
-},
-
-onError: (err, userId, context) => {
-  // Automatic rollback on error
-  if (context?.previousFollowStatus !== undefined) {
-    queryClient.setQueryData(['is-following', userId], context.previousFollowStatus)
-  }
-}
-```
-
-**Benefits:**
-- ⚡ Zero perceived latency
-- 🔄 Automatic state synchronization
-- 🛡️ Race condition prevention
-- 📊 Consistent UI state
-
-### 2. Query Key Factory Pattern
-
-Centralized query key management prevents cache inconsistencies:
-
-```typescript
-// src/services/posts/keys.ts
+// services/posts/keys.ts
 export const postKeys = {
   all: ['posts'] as const,
   list: () => [...postKeys.all, 'list'] as const,
@@ -484,249 +106,163 @@ export const postKeys = {
   detail: (postId: string) => [...postKeys.all, 'detail', postId] as const,
 };
 
-// Usage in queries
-useQuery({
-  queryKey: postKeys.detail(postId),
-  queryFn: () => fetchPost(postId)
-})
-
-// Usage in mutations
-queryClient.invalidateQueries({ queryKey: postKeys.all })
+// Precise cache invalidation
+queryClient.invalidateQueries({ queryKey: postKeys.byUser(userId) });
 ```
 
-**Benefits:**
-- 🔑 Type-safe query keys
-- 🔄 Consistent cache access
-- 🎯 Precise invalidation
-- 📦 Prevents typos
+### Optimistic Update Flow
 
-### 3. Three-Layer Architecture
-
-**API Layer** → **Service Layer** → **Feature Layer**
+Full implementation with race condition prevention:
 
 ```typescript
-// API Layer (Pure Supabase calls)
-export const postsApi = {
-  async getAllPosts(): Promise<DbPostRow[]> {
-    const { data, error } = await supabase
-      .from('posts')
-      .select('*')
-      .order('created_at', { ascending: false });
-    if (error) throw error;
-    return data;
-  }
+// Example: Like mutation
+onMutate: async (postId) => {
+  // 1. Cancel outgoing queries
+  await queryClient.cancelQueries({ queryKey: postKeys.detail(postId) });
+  
+  // 2. Snapshot current state
+  const previous = queryClient.getQueryData(postKeys.detail(postId));
+  
+  // 3. Optimistic update
+  queryClient.setQueryData(postKeys.detail(postId), (old) => ({
+    ...old,
+    isLiked: true,
+    likeCount: old.likeCount + 1
+  }));
+  
+  return { previous };
+},
+
+onError: (err, postId, context) => {
+  // 4. Rollback on failure
+  queryClient.setQueryData(postKeys.detail(postId), context.previous);
 }
-
-// Service Layer (React Query composition)
-export const useGetAllPosts = () => {
-  return useQuery({
-    queryKey: postKeys.list(),
-    queryFn: () => postsApi.getAllPosts(),
-  });
-};
-
-// Feature Layer (Business logic)
-export const Feed = () => {
-  const { data: posts, isLoading } = useGetAllPosts();
-  // ... UI logic
-}
-```
-
-**Benefits:**
-- 🔌 Easy backend migration
-- 🧪 Testable layers
-- 📚 Clear responsibilities
-- 🔧 Maintainable code
-
-### 4. Type-Safe API Layer
-
-Full TypeScript coverage with strict mode:
-
-```typescript
-interface CreatePostPayload {
-  user_id: string;
-  caption: string;
-  image_url: string;
-}
-
-interface DbPostRow {
-  id: string;
-  user_id: string;
-  caption: string;
-  image_url: string;
-  created_at: string;
-  like_count: number;
-  profiles?: {
-    id: string;
-    username: string;
-    avatar_url: string | null;
-  };
-}
-```
-
-**Benefits:**
-- ✅ Compile-time error catching
-- 🔍 IntelliSense support
-- 📝 Self-documenting code
-- 🐛 Fewer runtime errors
-
----
-
-## 🗄️ Database Schema
-
-```mermaid
-erDiagram
-    profiles ||--o{ posts : creates
-    profiles ||--o{ follows : "follows/followed_by"
-    profiles ||--o{ post_likes : likes
-    posts ||--o{ post_likes : "liked_by"
-    
-    profiles {
-        uuid id PK
-        text username UK
-        text full_name
-        text avatar_url
-        text bio
-        int followers_count
-        int following_count
-        int posts_count
-        timestamp created_at
-    }
-    
-    posts {
-        uuid id PK
-        uuid user_id FK
-        text caption
-        text image_url
-        int like_count
-        timestamp created_at
-    }
-    
-    follows {
-        uuid id PK
-        uuid follower_id FK
-        uuid following_id FK
-        timestamp created_at
-    }
-    
-    post_likes {
-        uuid id PK
-        uuid post_id FK
-        uuid user_id FK
-        timestamp created_at
-    }
 ```
 
 ---
 
-## ⚡ Performance
+## 🚀 Quick Start
 
-### Optimizations Implemented
+```bash
+# Clone and install
+git clone https://github.com/bibek-bk/stelllar.git
+cd stelllar
+npm install
 
-| Optimization | Impact | Implementation |
-|--------------|--------|----------------|
-| **Code Splitting** | -65% initial bundle | React.lazy() on routes |
-| **Smart Caching** | -60% API calls | Normalized TanStack Query cache |
-| **Optimistic UI** | -80% perceived latency | Instant UI updates |
-| **Image Lazy Loading** | +40% initial load speed | Native lazy loading |
-| **Debouncing** | -90% redundant requests | 300ms debounce on interactions |
-| **Memoization** | +30% re-render performance | React.memo on heavy components |
+# Environment setup
+cp .env.example .env
+# Add your Supabase credentials to .env
 
-### Metrics
-
-```
-Bundle Size:        ~180 KB (gzipped)
-Initial Load:       < 2s (3G)
-Time to Interactive: < 3s
-Lighthouse Score:   95+ (all categories)
+# Run development server
+npm run dev
 ```
 
+### Required Environment Variables
+
+```env
+VITE_SUPABASE_URL=your_supabase_project_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+<!-- ### Database Setup
+
+Run the SQL schema in your Supabase SQL Editor: [View Schema →](./docs/schema.sql) -->
+
+---
+
+## ⚡ Performance Optimizations
+
+**Implemented Optimizations:**
+- **Code Splitting** - React.lazy() on routes to reduce initial bundle size
+- **Smart Caching** - TanStack Query prevents redundant API calls
+- **Optimistic UI** - Updates appear instant (no server round-trip wait)
+- **Image Lazy Loading** - Images load on scroll for faster initial page load
+- **Debounced Interactions** - 300ms debounce on rapid like/follow clicks
+
+**Why These Matter:**
+- Users see updates immediately (optimistic UI)
+- Navigating between pages doesn't refetch cached data
+- App loads fast even on slower connections
+
+---
+
+## 🎓 Key Learnings
+
+Building this project taught me:
+
+1. **Architecture Matters** - FSD made adding new features predictable and safe
+2. **Optimistic UI is Hard** - Race conditions, rollbacks, and cache consistency require careful planning
+3. **Query Keys are Critical** - A single typo can break cache invalidation across the app
+4. **TypeScript Strictness Pays Off** - Caught null reference errors, type mismatches, and undefined property access at compile time
+5. **Separation of Concerns** - API → Service → Feature layers made testing and refactoring easier
+6. **User Experience is Key** - Loading states, error boundaries, and feedback loops improve perceived performance
 ---
 
 ## 🚧 Roadmap
 
-### Version 1.0 (Current) ✅
-- [x] User authentication (OAuth 2.0)
-- [x] Post creation with image upload
-- [x] Feed with chronological posts
-- [x] Like/unlike system
-- [x] Follow/unfollow system
-- [x] User profiles
-- [x] Edit profile
+**Currently Working On:**
+- [ ] Comments system with nested replies
+- [ ] Real-time notifications with Supabase Realtime
+- [ ] Infinite scroll with cursor-based pagination
 
-### Version 2.0 (Planned) 🔜
-- [ ] Comments system
-- [ ] Real-time notifications
+**Future Plans:**
 - [ ] Direct messaging
 - [ ] Stories feature
-- [ ] Search & explore
-- [ ] Hashtags
-- [ ] Video posts
-- [ ] Infinite scroll with pagination
-
-### Version 3.0 (Future) 💡
+- [ ] Search & hashtags
 - [ ] Dark mode
-- [ ] Multiple image posts
-- [ ] Post editing
-- [ ] Save/bookmark posts
-- [ ] User mentions
-- [ ] Progressive Web App (PWA)
-- [ ] Analytics dashboard
 
 ---
 
-## 🤝 Contributing
+## 📝 Technical Challenges Solved
 
-Contributions are welcome! Please follow these steps:
+<details>
+<summary><b>1. Race Conditions in Optimistic Updates</b></summary>
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+**Problem:** Rapid like/unlike caused cache corruption.
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct.
+**Solution:** Implemented `cancelQueries` in `onMutate` to cancel in-flight requests before optimistic updates.
+</details>
 
----
+<details>
+<summary><b>2. Cache Invalidation Strategy</b></summary>
 
-## 📄 License
+**Problem:** Following a user didn't update their follower count in feed posts.
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+**Solution:** Created query key factory with `postKeys.all` to invalidate all post-related queries atomically.
+</details>
+
+<details>
+<summary><b>3. Image Upload UX</b></summary>
+
+**Problem:** Users didn't know when upload was complete.
+
+**Solution:** Combined loading states, preview, and toast notifications for clear feedback.
+</details>
 
 ---
 
 ## 👨‍💻 Author
 
-**Your Name**
+**[Bibek B.K]**
 
-- Portfolio: [yourportfolio.com](https://yourportfolio.com)
-- LinkedIn: [linkedin.com/in/yourprofile](https://linkedin.com/in/yourprofile)
-- GitHub: [@yourusername](https://github.com/yourusername)
-- Email: your.email@example.com
+Frontend Engineer passionate about scalable architecture and user experience.
 
----
-
-## 🙏 Acknowledgments
-
-- [Feature-Sliced Design](https://feature-sliced.design/) - Architecture methodology
-- [TanStack Query](https://tanstack.com/query) - Server state management
-- [Supabase](https://supabase.com/) - Backend infrastructure
-- [Tailwind CSS](https://tailwindcss.com/) - Styling framework
+- 💼 [Portfolio](https://bibekbk.vercel.app)
+- 💌 [your.email@example.com](mailto:bibekbk0404gmail.com)
+- 🔗 [LinkedIn](https://linkedin.com/in/bibekbk)
 
 ---
 
-## 📊 Project Status
+## 📄 License
 
-![Status](https://img.shields.io/badge/status-active-success.svg)
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
+MIT License - feel free to use this project for learning or your portfolio.
 
 ---
 
 <div align="center">
 
-**⭐ Star this repo if you found it helpful!**
+**⭐ If you found this helpful, consider starring the repo!**
 
-Made with ❤️ and ☕
+Built with ❤️ and lots of ☕
 
 </div>
