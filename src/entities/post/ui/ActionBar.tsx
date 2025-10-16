@@ -12,7 +12,6 @@ interface ActionBarProps {
 
 export const ActionBar: React.FC<ActionBarProps> = ({
   postId,
-  
   isLiked,
   className = ''
 }) => {
@@ -31,8 +30,7 @@ export const ActionBar: React.FC<ActionBarProps> = ({
 
         {/* Share Button */}
         <button
-         
-          className="flex items-center space-x-1 hover:opacity-70 transition-opacity"
+          className="flex items-center space-x-1 hover:opacity-70 transition-opacity focus:ring-2 focus:ring-blue-500 focus:outline-none rounded"
           aria-label="Share post"
         >
           <svg
@@ -40,6 +38,7 @@ export const ActionBar: React.FC<ActionBarProps> = ({
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
+            aria-hidden="true"
           >
             <path
               strokeLinecap="round"

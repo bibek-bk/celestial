@@ -15,10 +15,11 @@ const ImagePreview: React.FC<{ preview: string; onRemove: () => void }> = ({ pre
       <img src={preview} alt="Preview" className="w-full h-full object-cover" />
       <button
         onClick={onRemove}
-        className="absolute top-2 right-2 p-1.5 bg-black/60 hover:bg-black/80 rounded-full text-white transition-colors"
+        className="absolute top-2 right-2 p-1.5 bg-black/60 hover:bg-black/80 rounded-full text-white transition-colors focus:ring-2 focus:ring-blue-500 focus:outline-none"
         type="button"
+        aria-label="Remove image"
       >
-        <X size={18} />
+        <X size={18} aria-hidden="true" />
       </button>
     </div>
   );
@@ -57,8 +58,8 @@ const ImageUploader: React.FC<{ onImageSelect: (file: File) => void; disabled?: 
       onDrop={handleDrop}
       onClick={() => !disabled && inputRef.current?.click()}
     >
-      <input ref={inputRef} type="file" accept="image/*" onChange={handleChange} className="hidden" disabled={disabled} />
-      <ImageIcon className="mx-auto mb-4 text-[var(--color-text-secondary)]" size={48} />
+      <input ref={inputRef} type="file" accept="image/*" onChange={handleChange} className="hidden" disabled={disabled} id="image-upload" aria-label="Upload image" />
+      <ImageIcon className="mx-auto mb-4 text-[var(--color-text-secondary)]" size={48} aria-hidden="true" />
       <p className="text-[var(--color-text-primary)] font-medium mb-1">Drag and drop your photo here</p>
       <p className="text-sm text-[var(--color-text-secondary)]">or click to browse</p>
     </div>
@@ -158,8 +159,8 @@ export const CreatePostModal: React.FC<CreatePostModalProps> = ({ isOpen, onClos
         <div className="flex items-center justify-between px-6 py-4 border-b border-[var(--color-border)]">
           <h2 id="modal-title" className="text-xl font-semibold text-[var(--color-text-primary)]">Create new post</h2>
           {!isPending && (
-            <button onClick={handleClose} className="p-1 hover:bg-[var(--color-background)] rounded-full transition-colors">
-              <X size={24} className="text-[var(--color-text-secondary)]" />
+            <button onClick={handleClose} className="p-1 hover:bg-[var(--color-background)] rounded-full transition-colors focus:ring-2 focus:ring-blue-500 focus:outline-none" aria-label="Close modal">
+              <X size={24} className="text-[var(--color-text-secondary)]" aria-hidden="true" />
             </button>
           )}
         </div>
@@ -180,28 +181,32 @@ export const CreatePostModal: React.FC<CreatePostModalProps> = ({ isOpen, onClos
                   value={caption}
                   onChange={(e) => setCaption(e.target.value)}
                   placeholder="Write a caption..."
-                  className="w-full px-4 py-3 border border-[var(--color-border)] rounded-xl focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent resize-none bg-[var(--color-background)] text-[var(--color-text-primary)] placeholder-[var(--color-text-secondary)]"
+                  className="w-full px-4 py-3 border border-[var(--color-border)] rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none resize-none bg-[var(--color-background)] text-[var(--color-text-primary)] placeholder-[var(--color-text-secondary)]"
                   rows={4}
                   maxLength={2200}
                   disabled={isPending}
+                  aria-describedby="caption-counter"
                 />
-                <div className="text-right text-sm text-[var(--color-text-secondary)] mt-1">{caption.length}/2200</div>
+                <div id="caption-counter" className="text-right text-sm text-[var(--color-text-secondary)] mt-1" aria-live="polite">{caption.length}/2200</div>
               </div>
             )}
 
             {isPending && (
-              <ProgressBar progress={uploadProgress.progress} stage={uploadProgress.stage} />
+              <div role="status" aria-live="polite" aria-busy="true">
+                <ProgressBar progress={uploadProgress.progress} stage={uploadProgress.stage} />
+                <span className="sr-only">Uploading post, {uploadProgress.progress}% complete</span>
+              </div>
             )}
 
             {isSuccess && (
-              <div className="flex items-center gap-2 p-4 bg-green-500/10 text-green-400 rounded-xl border border-green-500/20">
-                <Check size={20} />
+              <div className="flex items-center gap-2 p-4 bg-green-500/10 text-green-400 rounded-xl border border-green-500/20" role="status" aria-live="polite">
+                <Check size={20} aria-hidden="true" />
                 <span className="font-medium">Post created successfully!</span>
               </div>
             )}
 
             {error && (
-              <div className="p-4 bg-red-500/10 text-red-400 rounded-xl border border-red-500/20">
+              <div className="p-4 bg-red-500/10 text-red-400 rounded-xl border border-red-500/20" role="alert">
                 <p className="font-medium">Failed to create post</p>
                 <p className="text-sm mt-1">{error}</p>
               </div>
@@ -222,11 +227,13 @@ export const CreatePostModal: React.FC<CreatePostModalProps> = ({ isOpen, onClos
                 disabled={!canSubmit}
                 variant="primary"
                 className="flex-1 flex items-center justify-center gap-2"
+                aria-busy={isPending}
               >
                 {isPending ? (
                   <>
-                    <Loader2 className="animate-spin" size={20} />
+                    <Loader2 className="animate-spin" size={20} aria-hidden="true" />
                     <span>Creating...</span>
+                    <span className="sr-only">Creating post, please wait</span>
                   </>
                 ) : (
                   'Share'

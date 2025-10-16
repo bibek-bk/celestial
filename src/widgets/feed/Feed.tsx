@@ -1,6 +1,6 @@
 import React from 'react';
-import { PostCard } from '@/entities/post/components/PostCard';
-import { SkeletonPost } from '@/entities/post/components/SkeletonPost';
+import { PostCard } from '@/entities/post/ui/PostCard';
+import { SkeletonPost } from '@/entities/post/ui/SkeletonPost';
 import { useGetAllPosts } from '@/services/posts/queries';
 import { useAuth } from '@/shared/hooks/useAuth';
 
@@ -15,7 +15,8 @@ export const Feed: React.FC<FeedProps> = ({ className = '' }) => {
   // console.log(posts)
   if (isLoading) {
     return (
-      <div className={`max-w-md  w-full mx-auto px-4 py-4 sm:py-6 ${className}`}>
+      <div className={`max-w-md  w-full mx-auto px-4 py-4 sm:py-6 ${className}`} role="status" aria-live="polite" aria-busy="true">
+        <span className="sr-only">Loading posts</span>
         <SkeletonPost />
         <SkeletonPost />
         <SkeletonPost />
@@ -25,7 +26,7 @@ export const Feed: React.FC<FeedProps> = ({ className = '' }) => {
 
   if (error) {
     return (
-      <div className={`max-w-md mx-auto px-4 py-6 sm:py-8 text-center ${className}`}>
+      <div className={`max-w-md mx-auto px-4 py-6 sm:py-8 text-center ${className}`} role="alert">
         <p className="text-red-500">Failed to load posts</p>
         <p className="text-sm text-gray-500 mt-2">{error.message}</p>
       </div>
@@ -34,7 +35,7 @@ export const Feed: React.FC<FeedProps> = ({ className = '' }) => {
 
   if (!posts || posts.length === 0) {
     return (
-      <div className={`max-w-md mx-auto px-4 py-6 sm:py-8 text-center ${className}`}>
+      <div className={`max-w-md mx-auto px-4 py-6 sm:py-8 text-center ${className}`} role="status">
         <p className="text-gray-500">No posts yet. Be the first to share!</p>
       </div>
     );

@@ -24,6 +24,7 @@ Built to demonstrate **enterprise-level frontend architecture** with patterns yo
 - **🎨 Type-Safe** - 100% TypeScript with strict mode enabled
 - **📱 Production-Ready** - Error boundaries, route guards, toast system
 - **🚀 Performance Optimized** - Code splitting, image lazy loading, debounced interactions
+- **♿ Accessibility-First (a11y)** - Enhanced focus states, ARIA attributes, and screen reader support across buttons, modals, and feed components for an inclusive user experience
 
 ---
 

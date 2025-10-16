@@ -89,7 +89,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
 function ToastViewport({ toasts, onDismiss }: { toasts: Toast[]; onDismiss: (id: string) => void }) {
   const container = document.getElementById('toast-root') || document.body;
   return createPortal(
-    <div className="fixed z-[100] top-4 right-8 flex flex-col gap-3 w-[min(92vw,380px)]">
+    <div className="fixed z-[100] top-4 right-4 sm:right-8 flex flex-col gap-3 w-[min(92vw,380px)]">
       {toasts.map((t) => (
         <ToastCard key={t.id} toast={t} onDismiss={() => onDismiss(t.id)} />
       ))}

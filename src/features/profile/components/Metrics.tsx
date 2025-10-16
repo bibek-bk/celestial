@@ -23,7 +23,7 @@ const Metrics: React.FC<MetricsProps> = ({
   ];
 
   return (
-    <div className={`flex gap-4 sm:gap-10   ${className}`}>
+    <div className={`flex gap-6 sm:gap-10   ${className}`}>
       {metrics.map((metric) => (
         <div key={metric.label} className="text-center">
           <div

@@ -12,12 +12,12 @@ const PostsReelsToggle: React.FC<PostsReelsToggleProps> = ({
   className = ''
 }) => {
   return (
-    <div className={`px-4 sm:px-6 ${className}`}>
+    <div className={`px-4 sm:px-6 ${className}`} role="tablist" aria-label="Content type">
       <div className="flex border-b border-[var(--color-border)]">
         {/* Posts Tab */}
         <button
           onClick={() => onTabChange('posts')}
-          className={`flex-1 py-3 px-4 text-center font-medium text-sm transition-colors duration-200  ${
+          className={`flex-1 py-3 px-4 text-center font-medium text-sm transition-colors duration-200 focus:ring-2 focus:ring-blue-500 focus:outline-none ${
             activeTab === 'posts'
               ? 'text-[var(--color-text-primary)] ]'
               : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
@@ -33,6 +33,7 @@ const PostsReelsToggle: React.FC<PostsReelsToggleProps> = ({
               viewBox="0 0 24 24" 
               fill="none" 
               className={activeTab === 'posts' ? 'text-[var(--color-primary)]' : 'text-[var(--color-text-secondary)]'}
+              aria-hidden="true"
             >
               <rect 
                 x="3" 
@@ -78,7 +79,7 @@ const PostsReelsToggle: React.FC<PostsReelsToggleProps> = ({
         {/* Reels Tab */}
         <button
           onClick={() => onTabChange('reels')}
-          className={`flex-1 py-3 px-4 text-center font-medium text-sm transition-colors duration-200  ${
+          className={`flex-1 py-3 px-4 text-center font-medium text-sm transition-colors duration-200 focus:ring-2 focus:ring-blue-500 focus:outline-none ${
             activeTab === 'reels'
               ? 'text-[var(--color-text-primary)]]'
               : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'
@@ -94,6 +95,7 @@ const PostsReelsToggle: React.FC<PostsReelsToggleProps> = ({
               viewBox="0 0 24 24" 
               fill="none" 
               className={activeTab === 'reels' ? 'text-[var(--color-primary)]' : 'text-[var(--color-text-secondary)]'}
+              aria-hidden="true"
             >
               <rect 
                 x="2" 
