@@ -30,7 +30,7 @@ export const FollowButton: React.FC<FollowButtonProps> = ({
   };
 
   const baseClasses =
-    'font-medium rounded-lg transition-all duration-200 flex items-center justify-center gap-2 disabled:cursor-not-allowed max-w-[300px] sm:max-w-[110px] min-w-[110px] w-full';
+    'w-full font-medium rounded-lg transition-all duration-200 flex items-center justify-center gap-2 disabled:cursor-not-allowed max-w-[300px] sm:max-w-[110px] min-w-[110px] w-full focus:ring-2 focus:ring-blue-500 focus:outline-none';
 
   const variantClasses = isFollowing
     ? 'bg-gray-200 hover:bg-gray-300 text-gray-800'
@@ -46,6 +46,7 @@ export const FollowButton: React.FC<FollowButtonProps> = ({
       disabled={isPending}
       className={cn(baseClasses, sizeClasses[size], variantClasses)}
       aria-label={isFollowing ? 'Unfollow user' : 'Follow user'}
+      aria-pressed={isFollowing}
     >
       {isPending ? (
         <Spinner size={size} color={spinnerColor} />

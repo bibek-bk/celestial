@@ -87,26 +87,22 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({ onClose }) => {    const 
 
     if (profileLoading) {
         return (
-            //   <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-            //     <div className="bg-white rounded-lg p-6">
             <RouteLoader />
-            //     </div>
-            //   </div>
         );
     }
 
     return (
-        <div className="fixed inset-0 bg-[var(--color-overlay-dark)] flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-[var(--color-overlay-dark)] flex items-center justify-center z-50 p-4" role="dialog" aria-modal="true" aria-labelledby="edit-profile-title">
             <div className="bg-[var(--color-background-secondary)] rounded-lg max-w-md w-full border border-[var(--color-border)]">
                 {/* Header */}
                 <div className="flex items-center justify-between p-4 border-b border-[var(--color-border)]">
-                    <h2 className="text-xl font-semibold text-[var(--color-text-primary)]">Edit Profile</h2>
+                    <h2 id="edit-profile-title" className="text-xl font-semibold text-[var(--color-text-primary)]">Edit Profile</h2>
                     <button
                         onClick={onClose}
-                        className="text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] transition-colors"
+                        className="text-[var(--color-text-tertiary)] hover:text-[var(--color-text-primary)] transition-colors focus:ring-2 focus:ring-blue-500 focus:outline-none rounded"
                         aria-label="Close edit profile dialog"
                     >
-                        <X size={24} />
+                        <X size={24} aria-hidden="true" />
                     </button>                </div>
 
                 {/* Form */}
@@ -116,16 +112,19 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({ onClose }) => {    const 
                         <div className="relative">
                             <img
                                 src={previewUrl || '/placeholder-user.jpg'}
-                                alt="Profile"
+                                alt="Profile avatar preview"
                                 className="w-24 h-24 rounded-full object-cover border border-[var(--color-border)]"
                             />
-                            <label className="absolute bottom-0 right-0 bg-[var(--color-primary)] text-[var(--color-text-inverse)] p-2 rounded-full cursor-pointer hover:brightness-110 transition-all">
-                                <Camera size={16} />
+                            <label htmlFor="avatar-upload" className="absolute bottom-0 right-0 bg-[var(--color-primary)] text-[var(--color-text-inverse)] p-2 rounded-full cursor-pointer hover:brightness-110 transition-all focus-within:ring-2 focus-within:ring-blue-500">
+                                <Camera size={16} aria-hidden="true" />
+                                <span className="sr-only">Change profile photo</span>
                                 <input
+                                    id="avatar-upload"
                                     type="file"
                                     accept="image/*"
                                     onChange={handleAvatarChange}
                                     className="hidden"
+                                    aria-label="Upload profile photo"
                                 />
                             </label>
                         </div>
@@ -134,10 +133,11 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({ onClose }) => {    const 
 
                     {/* Name Input */}
                     <div>
-                        <label className="block text-sm font-medium text-[var(--color-text-primary)] mb-2">
+                        <label htmlFor="username" className="block text-sm font-medium text-[var(--color-text-primary)] mb-2">
                             Name
                         </label>
                         <input
+                            id="username"
                             type="text"
                             value={formData.username}
                             onChange={(e) =>
@@ -146,20 +146,22 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({ onClose }) => {    const 
                             className={cn(
                                 "w-full px-3 py-2 bg-[var(--color-background)] border border-[var(--color-border)] rounded-md",
                                 "text-[var(--color-text-primary)] placeholder:text-[var(--color-text-tertiary)]",
-                                "focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent",
+                                "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
                                 "transition-colors"
                             )}
                             placeholder="Your name"
                             maxLength={50}
+                            aria-required="true"
                         />
                     </div>
 
                     {/* Bio Input */}
                     <div>
-                        <label className="block text-sm font-medium text-[var(--color-text-primary)] mb-2">
+                        <label htmlFor="bio" className="block text-sm font-medium text-[var(--color-text-primary)] mb-2">
                             Bio
                         </label>
                         <textarea
+                            id="bio"
                             value={formData.bio}
                             onChange={(e) =>
                                 setFormData({ ...formData, bio: e.target.value })
@@ -167,14 +169,15 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({ onClose }) => {    const 
                             className={cn(
                                 "w-full px-3 py-2 bg-[var(--color-background)] border border-[var(--color-border)] rounded-md",
                                 "text-[var(--color-text-primary)] placeholder:text-[var(--color-text-tertiary)]",
-                                "focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] focus:border-transparent",
+                                "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
                                 "transition-colors resize-none"
                             )}
                             placeholder="Tell us about yourself"
                             rows={4}
                             maxLength={150}
+                            aria-describedby="bio-counter"
                         />
-                        <p className="text-xs text-[var(--color-text-tertiary)] mt-1">
+                        <p id="bio-counter" className="text-xs text-[var(--color-text-tertiary)] mt-1" aria-live="polite">
                             {formData.bio.length}/150 characters
                         </p>
                     </div>
@@ -195,8 +198,10 @@ const UpdateProfile: React.FC<UpdateProfileProps> = ({ onClose }) => {    const 
                             variant="primary"
                             className="flex-1"
                             disabled={isPending}
+                            aria-busy={isPending}
                         >
                             {isPending ? 'Saving...' : 'Save'}
+                            {isPending && <span className="sr-only">Saving profile changes</span>}
                         </Button>
                     </div>
                 </form>

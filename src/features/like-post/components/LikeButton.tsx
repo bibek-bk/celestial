@@ -27,8 +27,9 @@ export const LikeButton: React.FC<LikeButtonProps> = ({ postId, isLiked, classNa
   return (
     <button
       onClick={handleClick}
-      className={`flex items-center space-x-1  transition-opacity ${className}`}
+      className={`flex items-center space-x-1 transition-opacity focus:ring-2 focus:ring-blue-500 focus:outline-none rounded ${className}`}
       aria-label={isLiked ? 'Unlike post' : 'Like post'}
+      aria-pressed={isLiked}
     >
       <svg
         className={`w-6 h-6 transition-all duration-200 ${
@@ -37,6 +38,7 @@ export const LikeButton: React.FC<LikeButtonProps> = ({ postId, isLiked, classNa
         fill={isLiked ? 'currentColor' : 'none'}
         stroke="currentColor"
         viewBox="0 0 24 24"
+        aria-hidden="true"
       >
         <path
           strokeLinecap="round"

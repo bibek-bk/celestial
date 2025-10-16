@@ -8,9 +8,9 @@ export function AuthenticatedLayout(): React.JSX.Element {
     <div className="h-screen overflow-hidden w-full bg-black">
       <div className="flex w-full">
         <Sidebar />
-        <div className="flex flex-col w-full justify-start py-8 pb-20 lg:pb-8 h-screen overflow-y-auto">
+        <main className="flex flex-col w-full justify-start py-8 pb-20 lg:pb-8 h-screen overflow-y-auto">
           <Outlet />
-        </div>
+        </main>
         <NavBar />
       </div>
     </div>

@@ -11,7 +11,6 @@ import {
 } from '@/entities/post/models/types';
 import { useNavigate } from 'react-router-dom';
 import { timeAgo } from '@/shared/utils/timeAgo';
-// import { Navigate } from 'react-router-dom';
 
 interface PostCardProps extends PostInteractionHandlers {
   id: PostId;
@@ -56,7 +55,7 @@ export const PostCard: React.FC<PostCardProps> = ({
         <div className="ml-3 flex-1">
           <div className="flex items-center">
             <button
-              className="font-semibold text-white hover:underline focus:outline-none"
+              className="font-semibold text-white hover:underline focus:ring-2 focus:ring-blue-500 focus:outline-none"
               aria-label={`View ${user.username}'s profile`}
               onClick={() => {
                 navigate(`/profile/${user.id}`);
@@ -71,10 +70,10 @@ export const PostCard: React.FC<PostCardProps> = ({
         </div>
 
         <button
-          className="p-1 hover:bg-gray-800 rounded-full focus:outline-none transition-colors"
+          className="p-1 hover:bg-gray-800 rounded-full focus:ring-2 focus:ring-blue-500 focus:outline-none transition-colors"
           aria-label="More options"
         >
-          <svg className="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+          <svg className="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
             <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
           </svg>
         </button>

@@ -39,7 +39,7 @@ export function NavBar() {
                 <button
                   type="button"
                   onClick={item.onClick}
-                  className={`flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-200 active:scale-95 ${isActive ? 'bg-[var(--color-muted)]' : 'hover:bg-[var(--color-muted)]'}`}
+                  className={`flex flex-col items-center justify-center p-2 rounded-lg transition-all duration-200 active:scale-95 focus:ring-2 focus:ring-blue-500 focus:outline-none ${isActive ? 'bg-[var(--color-muted)]' : 'hover:bg-[var(--color-muted)]'}`}
                   aria-label={item.label}
                   aria-current={isActive ? 'page' : undefined}
                 >
@@ -47,6 +47,7 @@ export function NavBar() {
                     className={isActive ? 'text-red-500' : 'text-[var(--color-muted-foreground)]'}
                     size={26}
                     strokeWidth={2}
+                    aria-hidden="true"
                   />
                 </button>
               </li>

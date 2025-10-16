@@ -52,23 +52,25 @@ export function Sidebar() {
   }, [navigate, isSigningOut, showError]);
 
   return (
-    <div className="w-80 bg-[var(--color-background)] border-r border-[var(--color-border)] flex-col p-6 sticky top-0 h-screen hidden lg:flex">
+    <aside className="w-80 bg-[var(--color-background)] border-r border-[var(--color-border)] flex-col p-6 sticky top-0 h-screen hidden lg:flex" aria-label="Main navigation">
       {/* App Name */}
-      <div className="mb-8">
+      <header className="mb-8">
         <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
           stelllar
         </h1>
-      </div>
+      </header>
 
       {/* Menu Items */}
-      <nav className="space-y-2 flex-1">
+      <nav className="space-y-2 flex-1" aria-label="Primary navigation">
         {menuItems.map((item) => {
           const active = isActive(item.id);
           return (
             <button
               key={item.id}
               onClick={item.onClick}
-              className={`w-full flex items-center space-x-4 px-4 py-3 rounded-xl transition-all duration-200 group cursor-pointer ${
+              aria-label={item.label}
+              aria-current={active ? 'page' : undefined}
+              className={`w-full flex items-center space-x-4 px-4 py-3 rounded-xl transition-all duration-200 group cursor-pointer focus:ring-2 focus:ring-blue-500 focus:outline-none ${
                 active 
                   ? 'bg-gray-100 dark:bg-gray-900' 
                   : 'bg-transparent hover:bg-gray-100 dark:hover:bg-gray-900'
@@ -78,7 +80,7 @@ export function Sidebar() {
                 active 
                   ? 'text-red-500' 
                   : 'text-[var(--color-muted-foreground)] group-hover:text-red-500'
-              }`} />
+              }`} aria-hidden="true" />
               <span className={`font-medium transition-colors duration-200 ${
                 active 
                   ? 'text-red-500' 
@@ -96,16 +98,19 @@ export function Sidebar() {
         <button
           onClick={handleSignOut}
           disabled={isSigningOut}
-          className="w-full flex items-center space-x-4 px-4 py-3 rounded-xl border border-[var(--color-border)] bg-transparent hover:bg-gray-100 dark:hover:bg-gray-900 hover:border-[var(--color-border-strong)] transition-all duration-200 group cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
+          aria-label={isSigningOut ? 'Signing out' : 'Sign out'}
+          aria-busy={isSigningOut}
+          className="w-full flex items-center space-x-4 px-4 py-3 rounded-xl border border-[var(--color-border)] bg-transparent hover:bg-gray-100 dark:hover:bg-gray-900 hover:border-[var(--color-border-strong)] transition-all duration-200 group cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed focus:ring-2 focus:ring-blue-500 focus:outline-none"
         >
-          <LogOut className="w-6 h-6 text-[var(--color-muted-foreground)] group-hover:text-red-500 transition-colors duration-200" />
+          <LogOut className="w-6 h-6 text-[var(--color-muted-foreground)] group-hover:text-red-500 transition-colors duration-200" aria-hidden="true" />
           <span className="text-[var(--color-muted-foreground)] group-hover:text-red-500 font-medium transition-colors duration-200">
             {isSigningOut ? 'Signing out…' : 'Sign Out'}
           </span>
+          {isSigningOut && <span className="sr-only">Signing out, please wait</span>}
         </button>
       </div>
       <CreatePostModal isOpen={isCreateOpen} onClose={() => setIsCreateOpen(false)} />
-    </div>
+    </aside>
   );
 }
 

@@ -75,20 +75,20 @@ const PostsGrid: React.FC<PostsGridProps> = ({ posts, isLoading, className = '' 
     <div className={`px-4 sm:px-6  ${className}`}>
       <div className="grid grid-cols-3 gap-1 sm:gap-2 md:gap-3 py-4">
         {posts.map((post) => (
-          <div 
+          <button 
             key={post.id}
-            className="aspect-square rounded-lg relative group cursor-pointer overflow-hidden  bg-[#1F2A36]"
+            className="aspect-square rounded-lg relative group cursor-pointer overflow-hidden bg-[#1F2A36] focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            aria-label={`View post: ${post.caption || 'Image post'}`}
           >
             <img 
               src={post.image_url}
               alt={post.caption || 'Post image'}
               className="w-full h-full object-cover transition-transform duration-200 ease-out group-hover:scale-110 will-change-transform"
-              
             />
             
             {/* Hover overlay - only shows on hover */}
             <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-30 transition-opacity duration-200 ease-out pointer-events-none" />
-          </div>
+          </button>
         ))}
       </div>
     </div>

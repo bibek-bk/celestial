@@ -32,7 +32,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
   onClick,
   className = '',
 }) => {
-console.log(avatarSrc)
+  console.log(avatarSrc)
 
   return (
     <div className={`flex  items-start  sm:items-center gap-4 ${className}`}>
@@ -60,43 +60,47 @@ console.log(avatarSrc)
         </div>
 
         {/* Follow/Edit Profile Button */}
-        {isOwnProfile ? (
-          <Button
-            onClick={onEditProfile}
-            aria-label="Edit profile"
-            className="w-full sm:w-auto sm:min-w-[120px] gap-2"
-          >
-            Edit Profile
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 12 12"
-              fill="none"
-              className="opacity-80"
-              aria-hidden="true"
+        <div className='flex sm:justify-end w-full justify-center  gap-10'>
+          {isOwnProfile ? (
+            <Button
+              onClick={onEditProfile}
+              aria-label="Edit profile"
+              className=" sm:w-auto sm:min-w-[120px] gap-2"
             >
-              <path
-                d="M8.5 1.5L10.5 3.5L3.5 10.5L1.5 10.5L1.5 8.5L8.5 1.5Z"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </Button>
-        ) : (
-          <FollowButton
-            userId={userId}
-          />
-        )}
+              Edit Profile
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                className="opacity-80"
+                aria-hidden="true"
+              >
+                <path
+                  d="M8.5 1.5L10.5 3.5L3.5 10.5L1.5 10.5L1.5 8.5L8.5 1.5Z"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Button>
+          ) : (
+            <FollowButton
+              userId={userId}
+            />
+          )}
+          <button
+            onClick={onClick}
+            className="lg:hidden p-2 hover:bg-gray-800 rounded-full transition-colors focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            aria-label="Settings"
+          >
+            <Settings className="w-5 h-5 text-gray-400 hover:text-gray-200" aria-hidden="true" />
+          </button>
+        </div>
+
       </div>
-      <button
-        onClick={onClick}
-        className="lg:hidden p-2 hover:bg-gray-800 rounded-full transition-colors"
-        aria-label="Settings"
-      >
-        <Settings className="w-5 h-5 text-gray-400 hover:text-gray-200" />
-      </button>
+
     </div>
   );
 };
